@@ -7,6 +7,7 @@ from ..internal.airplane import Airplane
 from ..internal.promocode import Promocode
 from ..internal.creditcard import CreditCard
 from ..internal.mobilebanking import MobileBanking
+from ..internal.user import User
 
 
 controller = Controller("MeltAsia")
@@ -63,3 +64,8 @@ controller.register("Peerawat Ingkhasantatikul", "66011442@kmitl.ac.th", "123456
 
 card = CreditCard("Peerawat Ingkhasantatikul", "123456789", datetime(2029, 1, 1), "123", 10000)
 mobile_banking = MobileBanking("Peerawat Ingkhasantatikul", "0812895077", "M00001", "1234", 10000)
+
+controller.add_user(User("Sataporn", "earn@gmail.com", "yHh31t0!", "0123456789", "KMITL", "2005-04-01"))
+controller.add_user(User("Issaree", "little@gmail.com", "1t+Mb880", "0987612345", "KMITL", "2005-05-01"))
+controller.add_user(User("Supakarn", "third@gmail.com", "391CUhr=", "0543216789", "KMITL", "2004-12-01"))
+controller.add_user(User("Peerawat", "mark@gmail.com", "hL334{0#", "0987654321", "KMITL", "2004-03-01"))
