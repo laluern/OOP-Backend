@@ -6,6 +6,7 @@ from ..internal.airport import Airport
 from ..internal.airplane import Airplane
 from ..internal.promocode import Promocode
 
+
 controller = Controller("MeltAsia")
 
 controller.add_airport(Airport("Suvarnabhumi", "BKK"))
@@ -55,3 +56,4 @@ controller.add_flight_instance_list("F00001",datetime(2024, 4, 1, 19, 35, 0), da
 controller.set_seat_price("FI00005", 1100)
 controller.add_flight_instance_list("F00002",datetime(2024, 4, 1, 22, 25, 0), datetime(2024, 4, 1, 23, 45, 0), "A00006")
 controller.set_seat_price("FI00006", 1300)
+
