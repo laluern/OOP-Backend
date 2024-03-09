@@ -34,6 +34,13 @@ def view_account_details(user_id : str):
     user = controller.search_user_by_user_id(user_id)
     return user.view_account_details()
 
-@app.post("/create_account")
-def create_account(dto:dto_create_account):
-    return controller.guest_list[0].create_account(dto.email, dto.password)
+@app.post("/register")
+def register(dto:dto_register):
+    return controller.register(dto.full_name, dto.email, dto.password, dto.phone_number, dto.address, dto.birth_date)
+
+@app.post("/login")
+def login(dto:dto_login):
+    return controller.login(dto.email, dto.password)
+
+
+

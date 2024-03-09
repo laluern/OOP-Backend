@@ -2,16 +2,35 @@ from .booking import Booking
 
 class User():
     user_number = 1
-    def __init__(self, email, password):
+    def __init__(self, full_name, email, password, phone_number, address, birth_date):
+        self.__full_name = full_name
         self.__email = email
         self.__user_id = f"U{User.user_number:05d}"
         self.__booking_list = []
         self.__password = password
+        self.__phone_number = phone_number
         User.user_number += 1
-
+        
     @property
     def email(self):
         return self.__email
+    
+    @property
+    def full_name(self):
+        return self.__full_name
+
+    @property
+    def phone_number(self):
+        return self.__phone_number
+
+    @property
+    def password(self):
+        return self.__password
+
+    @property
+    def user_id(self):
+        return self.__user_id
+
 
     def view_account_details(self):
         account_detail = []
@@ -32,9 +51,7 @@ class User():
         account_detail.append(booking_info_list)
         return account_detail
             
-    @property
-    def user_id(self):
-        return self.__user_id
+   
 
     def add_booking(self, booking):
         if isinstance(booking, Booking):

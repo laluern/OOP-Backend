@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from .user import User
 from .promocode import Promocode
 from .booking import Booking
 from .passenger import Passenger
@@ -72,12 +73,35 @@ class Controller:
         elif sort_by == "Earliest":
             flight_order = dict(sorted(flight_list.items(), key = lambda item:item[1][1]))
             return self.show_flight_format(flight_order)
+
+    def fill_info_and_select_luggage_weight(self, user_id, seat_no, flight_instance_no, gender, tel_no, name, birth_date, citizen_id, weight = ""):
+        flight_instance = self.search_flight_instance_by_flight_instance_no(flight_instance_no)
+        airplane = self.search_airplane_by_airplane_id(flight_instance.airplane)
+        user = self.search_user_by_user_id(user_id)
+        temporary_seat = self.search_seat_by_seat_no(seat_no, airplane)
+        
+        booking = Booking(Booking.booking_no, flight_instance.destination, flight_instance.departure, flight_instance.departure_time, flight_instance.destination_time)
+        passenger = Passenger(gender, tel_no, name, birth_date, citizen_id)
+        boardingpass = BoardingPass(flight_instance.destination, flight_instance.departure, flight_instance.departure_time, flight_instance.destination_time, flight_instance.flight_instance_no)
+        
+        if weight != "":
+            boardingpass.add_luggage(Luggage(weight, Luggage.luggage_id))
             
+        boardingpass.add_seat(temporary_seat)
+        passenger.add_boardingpass(boardingpass)
+        booking.add_passenger(passenger)
+        user.add_booking(booking)
+        return booking.booking_no
+    
     def booking_details(self, user_id, booking_no):
         booking_details = {}
         user = self.search_user_by_user_id(user_id)
         booking = user.search_booking_by_number(booking_no)
         passengers = booking.passenger
+        total_passenser = 0
+        seat_price = 0
+        total_luggages = 0
+        luggage_price = 0
         price_summary = 0
 
         for passenger in passengers:    
@@ -85,53 +109,70 @@ class Controller:
             luggages = boarding_pass.luggage_list
 
             for luggage in luggages:
-                price_summary += luggage.price
+                luggage_price += self.get_luggage_price(luggage.weight)
+                total_luggages += 1
 
             seat = boarding_pass.seat
-            price_summary += seat.price
+            seat_price += seat.price
+            total_passenser += 1
 
         booking_details = {
-            "departure" : booking.departure.airport_name,
-            "destination" : booking.destination.airport_name,
+            "departure" : booking.departure,
+            "destination" : booking.destination,
             "departure_time" : booking.departure_time,
-            "price" : price_summary
+            "price" : {
+                      f"seat price (x{total_passenser})" : seat_price,
+                      f"luggages price (x{total_luggages})" : luggage_price,
+                      f"Summary price" : seat_price + luggage_price
+            }
         }
         return booking_details
 
-    def fill_info_and_select_package(self, user_id, seat_no, flight_instance_no, gender, tel_no, name, birth_date, citizen_id, package = ""):
-        flight = self.search_flight_instance_by_flight_instance_no(flight_instance_no)
-        airplane = flight.airplane
-        user = self.search_user_by_user_id(user_id)
-        temporary_seat = self.search_seat_by_seat_no(seat_no, airplane)
+    def register(self, full_name, email, password, phone_number, address, birth_date):
+        if self.search_user_by_full_name(full_name) != None:
+            return "Name already used"
+        if self.search_user_by_email(email) != None:
+            return "Email already used"
+        if self.search_user_by_phone_number(phone_number) != None:
+            return "Phone number already used"
         
-        booking = Booking(Booking.booking_no, flight.destination, flight.departure, flight.departure_time, flight.destination_time)
-        passenger = Passenger(gender, tel_no, name, birth_date, citizen_id)
-        boardingpass = BoardingPass(flight.destination, flight.departure, flight.departure_time, flight.destination_time, flight.gate, flight.flight_no)
-        
-        if package != "":
-            if package == 'big':
-                price = 200
-            elif package == 'medium':
-                price = 100
-            else:
-                price = 50
-            luggage = Luggage(package, Luggage.luggage_id, price)
-            boardingpass.add_luggage(luggage)
-            
-        boardingpass.add_seat(temporary_seat)
-        passenger.add_boardingpass(boardingpass)
-        booking.add_passenger(passenger)
-        user.add_booking(booking)
-        return booking
+        user = User(full_name, email, password, phone_number, address, birth_date)
+        self.add_user(user)
+        return "Done"
 
+    def login(self, email, password):
+        user = self.search_user_by_email(email)
+        if user == None:
+            return "Wrong username or password"
+        if user.password != password:
+            return "Wrong username or password"
+        
+        return user.user_id        
+        
     def search_seat_by_seat_no(self, seat_no, airplane):
+        
         for seat in airplane.seat_list:
-            if seat.seat_no == seat_no:
+            if (seat.row + seat.column) == seat_no:
                 return seat
 
     def search_user_by_user_id(self, user_id):
         for user in self.__user_list:
             if user.user_id == user_id:
+                return user
+
+    def search_user_by_phone_number(self, phone_number):
+        for user in self.__user_list:
+            if user.phone_number == phone_number:
+                return user 
+
+    def search_user_by_full_name(self, full_name):
+        for user in self.__user_list:
+            if user.full_name == full_name:
+                return user       
+    
+    def search_user_by_email(self, email):
+        for user in self.__user_list:
+            if user.email == email:
                 return user
 
     def search_flight_instance_by_flight_instance_no(self, flight_instance_no):
@@ -174,6 +215,9 @@ class Controller:
         airplane = self.search_airplane_by_airplane_id(flight_instance.airplane)
         airplane.set_seat_price(base_price)
 
+    def get_luggage_price(self, weight):
+        return int("".join(filter(str.isdigit, weight))) * 30
+        
         
     def add_flight_list(self, flight):
         self.__flight_list.append(flight)
@@ -181,9 +225,9 @@ class Controller:
     def add_airplane(self, airplane):
         self.__airplane_list.append(airplane)
 
-    def add_flight_instance_list(self, flight_no, departure_time, destination_time, airplane, gate):
+    def add_flight_instance_list(self, flight_no, departure_time, destination_time, airplane):
         flight = self.search_flight_by_flight_no(flight_no)
-        self.__flight_instance_list.append(FlightInstance(flight.departure, flight.destination, flight.flight_no, departure_time, destination_time, airplane, gate))
+        self.__flight_instance_list.append(FlightInstance(flight.departure, flight.destination, flight.flight_no, departure_time, destination_time, airplane))
         
     def add_admin(self, admin):
         self.__admin_list.append(admin)
