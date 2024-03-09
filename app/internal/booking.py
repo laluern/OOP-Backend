@@ -2,11 +2,11 @@ class Booking:
 
     booking_number = 1
     
-    def __init__(self, booking_no, destination, departure, departure_time, arriving_time):
+    def __init__(self, departure, destination, departure_time, arriving_time):
         self.__booking_no = f"B{Booking.booking_number:05d}"
         self.__passenger_list = []
-        self.__destination = destination
         self.__departure = departure
+        self.__destination = destination
         self.__departure_time = departure_time
         self.__arriving_time = arriving_time
         self.__booking_status = None

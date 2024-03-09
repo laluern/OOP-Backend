@@ -50,7 +50,7 @@ class FlightInstance(Flight):
                 else:
                     self.__show_seat_list.append(ShowSeat(seat.row, seat.column, seat.seat_type, base_price * 1.2))
 
-    def search_seat_by_seat_no(self, seat_no):
+    def search_show_seat_by_seat_no(self, seat_no):
         for show_seat in self.__show_seat_list:
             if (show_seat.row + show_seat.column) == seat_no:
                 return show_seat

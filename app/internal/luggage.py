@@ -1,6 +1,6 @@
 class Luggage:
     luggage_number = 1
-    def __init__(self, weight, luggage_id):
+    def __init__(self, weight):
         self.__owner = None
         self.__weight = weight
         self.__luggage_id = f"L{Luggage.luggage_number:05d}"

@@ -37,8 +37,8 @@ class Controller:
             if flight_instance.departure == departure_name and flight_instance.destination == destination_name and str(flight_instance.departure_time.date()) == departure_time:
                 available_seat = self.get_available_seat(flight_instance.flight_instance_no)
                 if len(available_seat) >= total_passenger:
-                    lowest__price_seat = min(available_seat, key=lambda seat_no: flight_instance.search_seat_by_seat_no(seat_no).price)
-                    lowest_price = flight_instance.search_seat_by_seat_no(lowest__price_seat).price
+                    lowest__price_seat = min(available_seat, key=lambda seat_no: flight_instance.search_show_seat_by_seat_no(seat_no).price)
+                    lowest_price = flight_instance.search_show_seat_by_seat_no(lowest__price_seat).price
                    
                     flight_departure_time = flight_instance.departure_time
                     flight_destination_time = flight_instance.destination_time
@@ -76,24 +76,29 @@ class Controller:
                                                  }
         return seat_data
 
-    def fill_info_and_select_luggage_weight(self, user_id, seat_no, flight_instance_no, gender, tel_no, name, birth_date, citizen_id, weight = ""):
+    def create_booking(self, user_id, flight_instance_no):
+        user = self.search_user_by_user_id(user_id)
+        flight_instance = self.search_flight_instance_by_flight_instance_no(flight_instance_no)
+        booking = Booking(flight_instance.destination, flight_instance.departure, flight_instance.departure_time, flight_instance.destination_time)
+        user.add_booking(booking)
+        return booking.booking_no
+
+    def fill_info(self, user_id, flight_instance_no, booking_no, seat_no, weight, gender, phone_number, full_name, birth_date, citizen_id):
         flight_instance = self.search_flight_instance_by_flight_instance_no(flight_instance_no)
         airplane = self.search_airplane_by_airplane_id(flight_instance.airplane)
+        temporary_seat = flight_instance.search_show_seat_by_seat_no(seat_no)
         user = self.search_user_by_user_id(user_id)
-        temporary_seat = self.search_seat_by_seat_no(seat_no, airplane)
+        booking = user.search_booking_by_number(booking_no)
         
-        booking = Booking(Booking.booking_no, flight_instance.destination, flight_instance.departure, flight_instance.departure_time, flight_instance.destination_time)
-        passenger = Passenger(gender, tel_no, name, birth_date, citizen_id)
+        passenger = Passenger(gender, phone_number, full_name, birth_date, citizen_id)
         boardingpass = BoardingPass(flight_instance.destination, flight_instance.departure, flight_instance.departure_time, flight_instance.destination_time, flight_instance.flight_instance_no)
-        
-        if weight != "":
-            boardingpass.add_luggage(Luggage(weight, Luggage.luggage_id))
+    
+        boardingpass.add_luggage(Luggage(weight))
             
         boardingpass.add_seat(temporary_seat)
         passenger.add_boardingpass(boardingpass)
         booking.add_passenger(passenger)
-        user.add_booking(booking)
-        return booking.booking_no
+        return "Done"
     
     def booking_details(self, user_id, booking_no):
         booking_details = {}
@@ -108,11 +113,10 @@ class Controller:
 
         for passenger in passengers:    
             boarding_pass = passenger.boarding_pass
-            luggages = boarding_pass.luggage_list
+            luggage = boarding_pass.luggage
 
-            for luggage in luggages:
-                luggage_price += self.get_luggage_price(luggage.weight)
-                total_luggages += 1
+            luggage_price += self.get_luggage_price(luggage.weight)
+            total_luggages += 1
 
             seat = boarding_pass.seat
             seat_price += seat.price
@@ -149,12 +153,6 @@ class Controller:
         if user.password != password:
             return "Wrong username or password"
         return user.user_id        
-        
-    def search_seat_by_seat_no(self, seat_no, airplane):
-        
-        for seat in airplane.seat_list:
-            if (seat.row + seat.column) == seat_no:
-                return seat
 
     def search_user_by_user_id(self, user_id):
         for user in self.__user_list:

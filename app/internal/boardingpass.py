@@ -5,12 +5,16 @@ class BoardingPass:
         self.__departure = departure
         self.__departure_time = departure_time
         self.__destination_time = destination_time
-        self.__luggage_list = []
+        self.__luggage = None
         self.__gate = None
         self.__seat = None
+  
+    @property
+    def luggage(self):
+        return self.__luggage
 
     def add_luggage(self, luggage):
-        self.__luggage_list.append(luggage)
+        self.__luggage = luggage
 
     def add_seat(self, seat):
         self.__seat = seat
@@ -19,6 +23,3 @@ class BoardingPass:
     def seat(self):
         return self.__seat
     
-    @property
-    def luggage_list(self):
-        return self.__luggage_list

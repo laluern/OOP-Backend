@@ -31,8 +31,12 @@ from app.database.database import controller
 # print(controller.register("Peerawat Ingkhasantatikul", "66011442@kmitl.ac.th", "123456789", "0812895077", "KMITL", "2004-08-12"))
 # print(controller.login("66011442@kmitl.ac.th", "123456789"))
 
+# #TODO create_booking
+# print(controller.create_booking("U00001", "FI00001"))
+
 # #TODO fill_info_and_select_luggage_weight
-# print(controller.fill_info_and_select_luggage_weight("U00001", "1A", "FI00001", "male", "0812895077", "Peerawat Ingkhasantatikul", "2004-08-12", "123456", "15kg"))
+# print(controller.fill_info("U00001", "FI00001", "B00001", "1A", "15kg", "male", "0812895077", "Peerawat Ingkhasantatikul", "2004-08-12", "123456"))
+# print(controller.fill_info("U00001", "FI00001", "B00001", "1A", "30kg", "male", "0812895077", "Supakarn Tantichawa-ochanon", "2004-08-12", "123456"))
 
 # #TODO booking_details
 # print(controller.booking_details("U00001", "B00001"))
