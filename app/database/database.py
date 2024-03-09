@@ -59,5 +59,7 @@ controller.set_seat_price("FI00005", 1100)
 controller.add_flight_instance_list("F00002",datetime(2024, 4, 1, 22, 25, 0), datetime(2024, 4, 1, 23, 45, 0), "A00006")
 controller.set_seat_price("FI00006", 1300)
 
+controller.register("Peerawat Ingkhasantatikul", "66011442@kmitl.ac.th", "123456789", "0812895077", "KMITL", "2004-08-12")
+
 card = CreditCard("Peerawat Ingkhasantatikul", "123456789", datetime(2029, 1, 1), "123", 10000)
 mobile_banking = MobileBanking("Peerawat Ingkhasantatikul", "0812895077", "M00001", "1234", 10000)

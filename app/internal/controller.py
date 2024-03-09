@@ -201,7 +201,7 @@ class Controller:
             format_flight_instance_list[flight_instance_no]["departure"] = flight_instance_list[flight_instance_no][0]
             format_flight_instance_list[flight_instance_no]["departure_time"] = flight_instance_list[flight_instance_no][1].strftime("%Y-%m-%d %H:%M")
             format_flight_instance_list[flight_instance_no]["destination"] = flight_instance_list[flight_instance_no][2]
-            format_flight_instance_list[flight_instance_no]["departure_time"] = flight_instance_list[flight_instance_no][3].strftime("%Y-%m-%d %H:%M")
+            format_flight_instance_list[flight_instance_no]["destination_time"] = flight_instance_list[flight_instance_no][3].strftime("%Y-%m-%d %H:%M")
             hours, remainder = divmod(flight_instance_list[flight_instance_no][4], 3600)
             minutes, _ = divmod(remainder, 60)
             format_flight_instance_list[flight_instance_no]["duration"] = f"{hours}h {minutes}m"
