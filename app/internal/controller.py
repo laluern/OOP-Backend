@@ -148,7 +148,6 @@ class Controller:
             return "Wrong username or password"
         if user.password != password:
             return "Wrong username or password"
-        
         return user.user_id        
         
     def search_seat_by_seat_no(self, seat_no, airplane):
