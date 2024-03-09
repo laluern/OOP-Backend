@@ -5,6 +5,8 @@ from ..internal.flight import Flight
 from ..internal.airport import Airport
 from ..internal.airplane import Airplane
 from ..internal.promocode import Promocode
+from ..internal.creditcard import CreditCard
+from ..internal.mobilebanking import MobileBanking
 
 
 controller = Controller("MeltAsia")
@@ -57,3 +59,5 @@ controller.set_seat_price("FI00005", 1100)
 controller.add_flight_instance_list("F00002",datetime(2024, 4, 1, 22, 25, 0), datetime(2024, 4, 1, 23, 45, 0), "A00006")
 controller.set_seat_price("FI00006", 1300)
 
+card = CreditCard("Peerawat Ingkhasantatikul", "123456789", datetime(2029, 1, 1), "123", 10000)
+mobile_banking = MobileBanking("Peerawat Ingkhasantatikul", "0812895077", "M00001", "1234", 10000)
