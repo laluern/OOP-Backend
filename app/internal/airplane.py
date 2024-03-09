@@ -78,21 +78,6 @@ class Airplane:
     @property
     def airplane_id(self):
         return self.__airplane_id
-    
-    def set_seat_price(self, base_price):
-        for seat in self.__seat_list:
-            if seat.seat_type == "hot_seat":
-                seat.price = base_price * 1.5
-            else:
-                if seat.column == "B" or seat.column == "E":
-                    seat.price = base_price
-                else:
-                    seat.price = base_price *1.05
 
     def count_seat_type(self, seat_type):
         return len(self.__seat_list[seat_type])
-    
-    def search_seat_by_seat_no(self, seat_no):
-        for seat in self.__seat_list:
-            if (seat.row + seat.column) == seat_no:
-                return seat

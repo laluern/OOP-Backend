@@ -1,4 +1,5 @@
 from .flight import Flight
+from .showseat import ShowSeat
 
 class FlightInstance(Flight):
     flight_instance_number = 1
@@ -8,7 +9,7 @@ class FlightInstance(Flight):
         self.__departure_time = departure_time
         self.__destination_time = destination_time
         self.__airplane = airplane
-        self.__reserved_seat_list = []
+        self.__show_seat_list = []
         self.__gate = None
         FlightInstance.flight_instance_number += 1
 
@@ -36,8 +37,20 @@ class FlightInstance(Flight):
         self.__gate = gate
 
     @property
-    def reserved_seat_list(self):
-        return self.__reserved_seat_list
+    def show_seat_list(self):
+        return self.__show_seat_list
+    
+    def set_seat_price(self, airplane, base_price):
+        for seat in airplane.seat_list:
+            if seat.seat_type == "hot_seat":
+                self.__show_seat_list.append(ShowSeat(seat.row, seat.column, seat.seat_type, base_price * 1.5))
+            else:
+                if seat.column == "B" or seat.column == "E":
+                    self.__show_seat_list.append(ShowSeat(seat.row, seat.column, seat.seat_type, base_price))
+                else:
+                    self.__show_seat_list.append(ShowSeat(seat.row, seat.column, seat.seat_type, base_price * 1.2))
 
-    def add_reserved_seat(self, reserved_seat):
-        self.reserved_seat_list.append(reserved_seat)
+    def search_seat_by_seat_no(self, seat_no):
+        for show_seat in self.__show_seat_list:
+            if (show_seat.row + show_seat.column) == seat_no:
+                return show_seat

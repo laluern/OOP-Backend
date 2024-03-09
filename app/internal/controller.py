@@ -19,23 +19,15 @@ class Controller:
         self.__admin_list = []
         self.__airplane_list = []
         self.__airport_list = []
-
-    def get_seat_data(self, flight_instance_no):
-        flight_instance = self.search_flight_instance_by_flight_instance_no(flight_instance_no)
-        airplane = self.search_airplane_by_airplane_id(flight_instance.airplane)
-        seat_list = airplane.seat_list
-        reserved_seat_list = flight_instance.reserved_seat_list
-        seat_detail = {}
-        available_seat = []
-        for seat in seat_list:
-            seat_detail[seat.row + seat.column] = [seat.seat_type, seat.price]
-            available_seat.append(seat.row + seat.column)
-            for reserved_seat in reserved_seat_list:
-                if (seat.row + seat.column) == (reserved_seat.row + reserved_seat.column):
-                    available_seat.remove(reserved_seat.row + reserved_seat.column)
-        seat_data = {"seat_detail":seat_detail, "available_seat":available_seat}
-        return seat_data
     
+    def get_available_seat(self, flight_instance_no):
+        available_seat = []
+        flight_instance = self.search_flight_instance_by_flight_instance_no(flight_instance_no)
+        for show_seat in flight_instance.show_seat_list:
+            if show_seat.is_reserved == False:
+                available_seat.append(show_seat.row + show_seat.column)
+        return available_seat
+
     def search_flight(self, departure_name, destination_name, departure_time, total_passenger, promocode = ""):
         flight_list = {}
         departure = self.search_airport_by_airport_name(departure_name)
@@ -43,10 +35,10 @@ class Controller:
         for flight_instance in self.__flight_instance_list:
             airplane = self.search_airplane_by_airplane_id(flight_instance.airplane)
             if flight_instance.departure == departure_name and flight_instance.destination == destination_name and str(flight_instance.departure_time.date()) == departure_time:
-                available_seat = self.get_seat_data(flight_instance.flight_instance_no)["available_seat"]
+                available_seat = self.get_available_seat(flight_instance.flight_instance_no)
                 if len(available_seat) >= total_passenger:
-                    lowest__price_seat = min(available_seat, key=lambda seat_no: airplane.search_seat_by_seat_no(seat_no).price)
-                    lowest_price = airplane.search_seat_by_seat_no(lowest__price_seat).price
+                    lowest__price_seat = min(available_seat, key=lambda seat_no: flight_instance.search_seat_by_seat_no(seat_no).price)
+                    lowest_price = flight_instance.search_seat_by_seat_no(lowest__price_seat).price
                    
                     flight_departure_time = flight_instance.departure_time
                     flight_destination_time = flight_instance.destination_time
@@ -73,6 +65,16 @@ class Controller:
         elif sort_by == "Earliest":
             flight_order = dict(sorted(flight_list.items(), key = lambda item:item[1][1]))
             return self.show_flight_format(flight_order)
+    
+    def get_seat_data(self, flight_instance_no):
+        flight_instance = self.search_flight_instance_by_flight_instance_no(flight_instance_no)
+        seat_data = {}
+        for show_seat in flight_instance.show_seat_list:
+            seat_data[show_seat.row + show_seat.column] = {"seat_type" : show_seat.seat_type,
+                                                 "price" : show_seat.price,
+                                                 "is_reserved" : show_seat.is_reserved
+                                                 }
+        return seat_data
 
     def fill_info_and_select_luggage_weight(self, user_id, seat_no, flight_instance_no, gender, tel_no, name, birth_date, citizen_id, weight = ""):
         flight_instance = self.search_flight_instance_by_flight_instance_no(flight_instance_no)
@@ -198,22 +200,22 @@ class Controller:
     def show_flight_format(self, flight_instance_list):
         format_flight_instance_list = {}
         for flight_instance_no in flight_instance_list.keys():
-            format_flight_instance_list[flight_instance_no] = []
-            format_flight_instance_list[flight_instance_no].append(flight_instance_list[flight_instance_no][0])
-            format_flight_instance_list[flight_instance_no].append(flight_instance_list[flight_instance_no][1].strftime("%Y-%m-%d %H:%M"))
-            format_flight_instance_list[flight_instance_no].append(flight_instance_list[flight_instance_no][2])
-            format_flight_instance_list[flight_instance_no].append(flight_instance_list[flight_instance_no][3].strftime("%Y-%m-%d %H:%M"))
+            format_flight_instance_list[flight_instance_no] = {}
+            format_flight_instance_list[flight_instance_no]["departure"] = flight_instance_list[flight_instance_no][0]
+            format_flight_instance_list[flight_instance_no]["departure_time"] = flight_instance_list[flight_instance_no][1].strftime("%Y-%m-%d %H:%M")
+            format_flight_instance_list[flight_instance_no]["destination"] = flight_instance_list[flight_instance_no][2]
+            format_flight_instance_list[flight_instance_no]["departure_time"] = flight_instance_list[flight_instance_no][3].strftime("%Y-%m-%d %H:%M")
             hours, remainder = divmod(flight_instance_list[flight_instance_no][4], 3600)
             minutes, _ = divmod(remainder, 60)
-            format_flight_instance_list[flight_instance_no].append(f"{hours}h {minutes}m")
-            format_flight_instance_list[flight_instance_no].append(flight_instance_list[flight_instance_no][5])
-            format_flight_instance_list[flight_instance_no].append(flight_instance_list[flight_instance_no][6])
+            format_flight_instance_list[flight_instance_no]["duration"] = f"{hours}h {minutes}m"
+            format_flight_instance_list[flight_instance_no]["price"] = flight_instance_list[flight_instance_no][5]
+            format_flight_instance_list[flight_instance_no]["discount"] = flight_instance_list[flight_instance_no][6]
         return format_flight_instance_list
 
     def set_seat_price(self, flight_instance_no, base_price):
         flight_instance = self.search_flight_instance_by_flight_instance_no(flight_instance_no)
         airplane = self.search_airplane_by_airplane_id(flight_instance.airplane)
-        airplane.set_seat_price(base_price)
+        flight_instance.set_seat_price(airplane, base_price)
 
     def get_luggage_price(self, weight):
         return int("".join(filter(str.isdigit, weight))) * 30
