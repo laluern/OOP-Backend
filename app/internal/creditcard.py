@@ -1,9 +1,22 @@
 from .payment import Payment
 
 class CreditCard(Payment):
-    def __init__ (self, card_holder_name, card_no, expiration_date, security_code, limit):
-        self.__card_holder_name = card_holder_name
-        self.__card_no = card_no
-        self.__expiration_date = expiration_date
-        self.__security_code = security_code
-        self.__limit = limit
+    def __init__ (self):
+        self.__card_holder_name = None
+        self.__card_no = None
+        self.__expiration_date = None
+        self.__security_code = None
+        self.__limit = None
+
+    def processing_payment(self, price_summary, info):
+        self.__card_holder_name = info.card_holder_name
+        self.__card_no = info.card_no
+        self.__expiration_date = info.expiration_date
+        self.__security_code = info.security_code
+        self.__limit = 200000
+
+        if self.__limit >= price_summary:
+            self.__limit - price_summary
+            return "Payment successful"
+        else:
+            return "Not enough money"

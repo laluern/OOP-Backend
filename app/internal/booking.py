@@ -9,7 +9,7 @@ class Booking:
         self.__destination = destination
         self.__departure_time = departure_time
         self.__arriving_time = arriving_time
-        self.__booking_status = None
+        self.__booking_status = False
         self.__payment = None 
         Booking.booking_number += 1
 
@@ -21,6 +21,20 @@ class Booking:
 
     def add_passenger(self, passenger):
         self.__passenger_list.append(passenger)
+
+    def add_payment(self, payment):
+        self.__payment = payment
+
+    def set_booking_status(self):
+        self.__booking_status = True
+
+    @property
+    def payment(self):
+        return self.__payment
+
+    @property
+    def booking_status(self):
+        return self.__booking_status    
 
     @property
     def passenger(self):

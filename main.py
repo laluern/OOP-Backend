@@ -7,7 +7,7 @@ if __name__ == "__main__":
 
 #############################################################################################
 
-# #TODO get_available_seat
+#TODO get_available_seat
 # print(controller.get_available_seat("FI00001"))
 
 # #TODO seacrh_flgiht
@@ -40,3 +40,12 @@ if __name__ == "__main__":
 
 # #TODO booking_details
 # print(controller.booking_details("U00001", "B00001"))
+
+# #TODO payment ถ้าจะเทสต้องไปเปลี่ยนวิธีดึงตัวแปลใน creditcard หรือ mobilebanking
+# info = {
+#     "card_holder_name": "Supakarn",
+#     "card_no": "191",
+#     "expiration_date": "2032-10-10",
+#     "security_code": "123"
+# }
+# print(controller.pay("U00001", "B00001", controller.booking_details("U00001", "B00001"),0,info))

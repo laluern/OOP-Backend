@@ -1,4 +1,5 @@
 from datetime import datetime
+from copy import deepcopy
 
 from .user import User
 from .promocode import Promocode
@@ -8,6 +9,9 @@ from .boardingpass import BoardingPass
 from .luggage import Luggage
 from .seat import Seat
 from .flightinstance import FlightInstance
+from .payment import Payment
+from .creditcard import CreditCard
+from .mobilebanking import MobileBanking
 
 class Controller:
     def __init__(self, name):
@@ -19,6 +23,7 @@ class Controller:
         self.__admin_list = []
         self.__airplane_list = []
         self.__airport_list = []
+        self.__payment_list = [CreditCard(),MobileBanking()]
     
     def get_available_seat(self, flight_instance_no):
         available_seat = []
@@ -137,24 +142,41 @@ class Controller:
         }
         return booking_details
 
+    def pay(self, user_id, booking_no, booking_details, payment_method, info):
+        user = self.search_user_by_user_id(user_id)
+        booking = user.search_booking_by_number(booking_no)
+
+        summary_price = booking_details["price"]["Summary price"]
+        payment = deepcopy(self.__payment_list[payment_method])
+        transaction = Payment(booking_no, summary_price)
+        if payment.processing_payment(summary_price, info) == "Payment successful":
+            booking.add_payment(transaction)
+            booking.set_booking_status()
+            return  [booking.booking_status,booking.payment]
+        else:
+            return "Insufficient funds"
+
     def register(self, full_name, email, password, phone_number, address, birth_date):
         if self.search_user_by_full_name(full_name) != None:
-            return "Name already used"
+            # return "Name already used"
+            return None
         if self.search_user_by_email(email) != None:
-            return "Email already used"
+            # return "Email already used"
+            return None
         if self.search_user_by_phone_number(phone_number) != None:
-            return "Phone number already used"
-        
+            # return "Phone number already used" 
+            return None
         user = User(full_name, email, password, phone_number, address, birth_date)
         self.add_user(user)
-        return "Done"
+        return True
 
     def login(self, email, password):
         user = self.search_user_by_email(email)
         if user == None:
-            return "Wrong username or password"
+            return None
         if user.password != password:
-            return "Wrong username or password"
+            return None
+            
         return user.user_id        
 
     def search_user_by_user_id(self, user_id):
