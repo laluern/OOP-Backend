@@ -145,39 +145,50 @@ class Controller:
     def pay(self, user_id, booking_no, booking_details, payment_method, info):
         user = self.search_user_by_user_id(user_id)
         booking = user.search_booking_by_number(booking_no)
-
+        passengers = booking.passenger
         summary_price = booking_details["price"]["Summary price"]
         payment = deepcopy(self.__payment_list[payment_method])
         transaction = Payment(booking_no, summary_price)
         if payment.processing_payment(summary_price, info) == "Payment successful":
+
+            for passenger in passengers:
+                seat = passenger.boarding_pass.seat
+                seat.reserve_seat()
+    
             booking.add_payment(transaction)
             booking.set_booking_status()
-            return  [booking.booking_status,booking.payment]
+            return  [booking.booking_status,booking.payment,passengers[1].boarding_pass.seat.is_reserved]
         else:
             return "Insufficient funds"
 
     def register(self, full_name, email, password, phone_number, address, birth_date):
         if self.search_user_by_full_name(full_name) != None:
-            # return "Name already used"
-            return None
+            return "Name already used"
         if self.search_user_by_email(email) != None:
-            # return "Email already used"
-            return None
+            return "Email already used"
         if self.search_user_by_phone_number(phone_number) != None:
-            # return "Phone number already used" 
-            return None
-        user = User(full_name, email, password, phone_number, address, birth_date)
-        self.add_user(user)
-        return True
+            return "Phone number already used"
+        
+        new_user = User(full_name, email, password, phone_number, address, birth_date)
+        self.add_user(new_user)
+        return new_user
 
-    def login(self, email, password):
-        user = self.search_user_by_email(email)
-        if user == None:
-            return None
-        if user.password != password:
-            return None
-            
-        return user.user_id        
+    def hash_password(self, password):
+        return hash(password)   
+
+    def verify_username(self, email):
+        for user in self.__user_list:
+            if user.email == email:
+                return False
+        return True
+    
+    def verify_login(self, user_data):
+        for user in self.__user_list:
+            if user.email == user_data.email: 
+                hashed = self.hash_password(user_data.password)
+                if user.password == hashed :
+                    return user
+        return False  
 
     def search_user_by_user_id(self, user_id):
         for user in self.__user_list:
@@ -241,7 +252,6 @@ class Controller:
 
     def get_luggage_price(self, weight):
         return int("".join(filter(str.isdigit, weight))) * 30
-        
         
     def add_flight_list(self, flight):
         self.__flight_list.append(flight)

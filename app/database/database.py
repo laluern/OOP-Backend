@@ -60,14 +60,13 @@ controller.set_seat_price("FI00005", 1100)
 controller.add_flight_instance_list("F00002",datetime(2024, 4, 1, 22, 25, 0), datetime(2024, 4, 1, 23, 45, 0), "A00006")
 controller.set_seat_price("FI00006", 1300)
 
-controller.register("Peerawat Ingkhasantatikul", "66011442@kmitl.ac.th", "123456789", "0812895077", "KMITL", "2004-08-12")
-
-controller.create_booking("U00001", "FI00001")
-controller.fill_info("U00001", "FI00001", "B00001", "1A", "30kg", "male", "0812895077", "Supakarn Tantichawa-ochanon", "2004-08-12", "123456")
-
-controller.booking_details("U00001", "B00001")
+# controller.register("Peerawat Ingkhasantatikul", "66011442@kmitl.ac.th", "123456789", "0812895077", "KMITL", "2004-08-12")
 
 controller.add_user(User("Sataporn", "earn@gmail.com", "yHh31t0!", "0123456789", "KMITL", "2005-04-01"))
 controller.add_user(User("Issaree", "little@gmail.com", "1t+Mb880", "0987612345", "KMITL", "2005-05-01"))
 controller.add_user(User("Supakarn", "third@gmail.com", "391CUhr=", "0543216789", "KMITL", "2004-12-01"))
 controller.add_user(User("Peerawat", "mark@gmail.com", "hL334{0#", "0987654321", "KMITL", "2004-03-01"))
+
+controller.create_booking("U00001", "FI00001")
+controller.fill_info("U00001", "FI00001", "B00001", "1A", "30kg", "male", "0812895077", "Supakarn Tantichawa-ochanon", "2004-08-12", "123456")
+controller.booking_details("U00001", "B00001")
