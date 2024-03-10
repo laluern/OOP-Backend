@@ -155,22 +155,25 @@ class Controller:
 
     def register(self, full_name, email, password, phone_number, address, birth_date):
         if self.search_user_by_full_name(full_name) != None:
-            return "Name already used"
+            # return "Name already used"
+            return None
         if self.search_user_by_email(email) != None:
-            return "Email already used"
+            # return "Email already used"
+            return None
         if self.search_user_by_phone_number(phone_number) != None:
-            return "Phone number already used"
-        
+            # return "Phone number already used" 
+            return None
         user = User(full_name, email, password, phone_number, address, birth_date)
         self.add_user(user)
-        return "Done"
+        return True
 
     def login(self, email, password):
         user = self.search_user_by_email(email)
         if user == None:
-            return "Wrong username or password"
+            return None
         if user.password != password:
-            return "Wrong username or password"
+            return None
+            
         return user.user_id        
 
     def search_user_by_user_id(self, user_id):
