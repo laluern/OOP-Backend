@@ -38,11 +38,9 @@ class User():
         for that_booking in self.__booking_list:
             booking_info = []
             booking_info.append(that_booking.booking_no)
-            booking_info.append(that_booking.departure.airport_name)
-            booking_info.append(that_booking.destination.airport_name)
-            booking_info.append(that_booking.departure_date)
+            booking_info.append(that_booking.departure)
+            booking_info.append(that_booking.destination)
             booking_info.append(that_booking.departure_time)
-            booking_info.append(that_booking.arriving_date)
             booking_info.append(that_booking.arriving_time)
             booking_info_list.append(booking_info)
         

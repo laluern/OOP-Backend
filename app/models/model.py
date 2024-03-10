@@ -8,8 +8,6 @@ class dto_search_flight(BaseModel):
     promocode:str
 
 class dto_fill_info_and_select_package(BaseModel):
-    user_id:str
-    flight_instance_no:str
     gender:str
     tel_no:str
     name:str
@@ -37,4 +35,14 @@ class dto_change_password(BaseModel):
   old_password: str
   new_password: str
 
+class card_info(BaseModel):
+  card_holder_name: str
+  card_no: str
+  expiration_date: str
+  security_code: str
 
+class bank_account_info(BaseModel):
+  owner_name: str
+  tel_no: str
+  account_id: str
+  password: str

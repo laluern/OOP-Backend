@@ -22,6 +22,7 @@ app.add_middleware(
 )
 
 flight_list = []
+Booking_details = None
 
 @app.post("/search_flight")
 def search_flight(dto:dto_search_flight):
@@ -37,16 +38,18 @@ def select_flight(sort_by:str):
 def select_seat(flight_instance_no:str):
     return controller.get_seat_data(flight_instance_no)
 
-@app.post("/fill_info_and_select_package")
-def fill_info_and_select_package(dto:dto_fill_info_and_select_package):
-    return controller.fill_info_and_select_package(dto.user_id, dto.flight_instance_no, dto.gender, dto.tel_no, dto.name, dto.birth_date, dto.citizen_id, dto.package)
+@app.post("/{user_id}/{flight_instance_no}/fill_info_and_select_package")
+def fill_info_and_select_package(user_id, flight_instance_no, dto:dto_fill_info_and_select_package):
+    return controller.fill_info_and_select_package(user_id, flight_instance_no, dto.gender, dto.tel_no, dto.name, dto.birth_date, dto.citizen_id, dto.package)
 
-@app.get("/booking_details")
-def booking_details(user_id:str, booking_no:str):
-    return controller.booking_details(user_id, booking_no)
+@app.get("/{user_id}/{booking_no}/booking_details")
+def booking_details(user_id, booking_no):
+    global Booking_details
+    Booking_details = controller.booking_details(user_id, booking_no)
+    return Booking_details
 
-@app.get("/view_account_details")
-def view_account_details(user_id : str):
+@app.get("/{user_id}/view_account_details")
+def view_account_details(user_id):
     user = controller.search_user_by_user_id(user_id)
     return user.view_account_details()
 
@@ -58,5 +61,12 @@ def register(dto:dto_register):
 def login(dto:dto_login):
     return controller.login(dto.email, dto.password)
 
+@app.put("/{user_id}/payment_method/creditcard")
+def card_paid(user_id, booking_id, card_info:card_info):
+    return controller.pay(user_id, booking_id, Booking_details, 0, card_info)
+
+@app.put("/{user_id}/payment_method/mobilebanking")
+def card_paid(user_id, booking_id, bank_account_info:bank_account_info):
+    return controller.pay(user_id, booking_id, Booking_details, 1, bank_account_info)
 
 

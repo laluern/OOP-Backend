@@ -62,8 +62,10 @@ controller.set_seat_price("FI00006", 1300)
 
 controller.register("Peerawat Ingkhasantatikul", "66011442@kmitl.ac.th", "123456789", "0812895077", "KMITL", "2004-08-12")
 
-card = CreditCard("Peerawat Ingkhasantatikul", "123456789", datetime(2029, 1, 1), "123", 10000)
-mobile_banking = MobileBanking("Peerawat Ingkhasantatikul", "0812895077", "M00001", "1234", 10000)
+controller.create_booking("U00001", "FI00001")
+controller.fill_info("U00001", "FI00001", "B00001", "1A", "30kg", "male", "0812895077", "Supakarn Tantichawa-ochanon", "2004-08-12", "123456")
+
+controller.booking_details("U00001", "B00001")
 
 controller.add_user(User("Sataporn", "earn@gmail.com", "yHh31t0!", "0123456789", "KMITL", "2005-04-01"))
 controller.add_user(User("Issaree", "little@gmail.com", "1t+Mb880", "0987612345", "KMITL", "2005-05-01"))
