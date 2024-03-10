@@ -171,8 +171,8 @@ class Controller:
         return new_user
 
     def hash_password(self, password):
-        return hash(password)
-    
+        return hash(password)   
+
     def verify_username(self, email):
         for user in self.__user_list:
             if user.email == email:
@@ -185,7 +185,7 @@ class Controller:
                 hashed = self.hash_password(user_data.password)
                 if user.password == hashed :
                     return user
-        return False          
+        return False  
 
     def search_user_by_user_id(self, user_id):
         for user in self.__user_list:
@@ -249,7 +249,6 @@ class Controller:
 
     def get_luggage_price(self, weight):
         return int("".join(filter(str.isdigit, weight))) * 30
-        
         
     def add_flight_list(self, flight):
         self.__flight_list.append(flight)
