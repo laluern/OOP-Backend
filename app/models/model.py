@@ -7,7 +7,7 @@ class dto_search_flight(BaseModel):
     total_passenger:int
     promocode:str
 
-class dto_fill_info_and_select_package(BaseModel):
+class dto_fill_info(BaseModel):
     gender:str
     tel_no:str
     name:str

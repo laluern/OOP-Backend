@@ -5,7 +5,7 @@ import uvicorn
 if __name__ == "__main__":
     uvicorn.run("app.router.router:app", host="127.0.0.1", port=8000, log_level="info")
 
-#############################################################################################
+############################################################################################
 
 #TODO get_available_seat
 print(controller.get_available_seat("FI00001"))
@@ -28,8 +28,8 @@ print(controller.sort_flight(flight_list, "Earliest"))
 print(controller.get_seat_data("FI00003"))
 
 #TODO register, login
-print(controller.register("Peerawat Ingkhasantatikul", "66011442@kmitl.ac.th", "123456789", "0812895077", "KMITL", "2004-08-12"))
-print(controller.login("66011442@kmitl.ac.th", "123456789"))
+# print(controller.register("Peerawat Ingkhasantatikul", "66011442@kmitl.ac.th", "123456789", "0812895077", "KMITL", "2004-08-12"))
+# print(controller.login("66011442@kmitl.ac.th", "123456789"))
 
 #TODO create_booking
 print(controller.create_booking("U00001", "FI00001"))
@@ -42,10 +42,30 @@ print(controller.fill_info("U00001", "FI00001", "B00001", "1A", "30kg", "male", 
 print(controller.booking_details("U00001", "B00001"))
 
 # #TODO payment ถ้าจะเทสต้องไปเปลี่ยนวิธีดึงตัวแปลใน creditcard หรือ mobilebanking
-# info = {
-#     "card_holder_name": "Supakarn",
-#     "card_no": "191",
-#     "expiration_date": "2032-10-10",
-#     "security_code": "123"
+info = {
+    "card_holder_name": "Supakarn",
+    "card_no": "191",
+    "expiration_date": "2032-10-10",
+    "security_code": "123"
+}
+print(controller.pay("U00001", "B00001", controller.booking_details("U00001", "B00001"),0,info))
+
+# #TODO register 
+# user_data_register = {
+#     "full_name": "kwai",
+#     "email": "kwai@gmail.com",
+#     "password": "1111",
+#     "phone_number": "1111",
+#     "address": "1111",
+#     "birth_date": "1111"
 # }
-# print(controller.pay("U00001", "B00001", controller.booking_details("U00001", "B00001"),0,info))
+
+# controller.register(user_data_register["full_name"], user_data_register["email"], controller.hash_password(user_data_register["password"]), user_data_register["phone_number"], user_data_register["address"], user_data_register["birth_date"])
+# print(controller.register)
+
+# #TODO login ถ้าจะเทสต้องไปเปลี่ยนวิธีดึงตัวแปลใน controller.verify_login
+# user_data_login = {
+#     "email": "kwai@gmail.com",
+#     "password": "1111"
+# }
+# print(controller.verify_login(user_data_login))
