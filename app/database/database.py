@@ -62,7 +62,7 @@ controller.set_seat_price("FI00006", 1300)
 
 # controller.register("Peerawat Ingkhasantatikul", "66011442@kmitl.ac.th", "123456789", "0812895077", "KMITL", "2004-08-12")
 
-controller.add_user(User("Sataporn", "earn@gmail.com", "yHh31t0!", "0123456789", "KMITL", "2005-04-01"))
+controller.add_user(User("Sataporn", "earn@gmail.com", controller.hash_password("yHh31t0!"), "0123456789", "KMITL", "2005-04-01"))
 controller.add_user(User("Issaree", "little@gmail.com", "1t+Mb880", "0987612345", "KMITL", "2005-05-01"))
 controller.add_user(User("Supakarn", "third@gmail.com", "391CUhr=", "0543216789", "KMITL", "2004-12-01"))
 controller.add_user(User("Peerawat", "mark@gmail.com", "hL334{0#", "0987654321", "KMITL", "2004-03-01"))

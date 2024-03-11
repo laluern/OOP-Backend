@@ -3,6 +3,7 @@ from fastapi import FastAPI
 from ..models.model import *
 from ..database.database import controller
 from fastapi.middleware.cors import CORSMiddleware
+import json
 
 app = FastAPI()
 
@@ -120,7 +121,7 @@ def create_user(user_data: dto_register):
         if controller.verify_username(user_data.email) == True:
             new_user = controller.register(user_data.full_name, user_data.email, controller.hash_password(user_data.password), user_data.phone_number, user_data.address, user_data.birth_date)
             if new_user != None:
-                return {f"message: {new_user.full_name} account created successfully"}
+                return {"message": f"{new_user.full_name} account created successfully", "status": True}
             else:
                 return {"message": "Failed to create user"}
         else: return {"message": "Failed to create user"}
