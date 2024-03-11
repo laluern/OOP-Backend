@@ -73,6 +73,9 @@ class Controller:
     
     def get_seat_data(self, flight_instance_no):
         flight_instance = self.search_flight_instance_by_flight_instance_no(flight_instance_no)
+        flight_instance.search_show_seat_by_seat_no("1A").reserve_seat()
+        flight_instance.search_show_seat_by_seat_no("3B").reserve_seat()
+        flight_instance.search_show_seat_by_seat_no("6E").reserve_seat()
         seat_data = {}
         for show_seat in flight_instance.show_seat_list:
             seat_data[show_seat.row + show_seat.column] = {"seat_type" : show_seat.seat_type,
