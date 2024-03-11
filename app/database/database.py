@@ -64,8 +64,8 @@ controller.set_seat_price("FI00006", 1300)
 
 controller.add_user(User("Sataporn", "earn@gmail.com", controller.hash_password("yHh31t0!"), "0123456789", "KMITL", "2005-04-01")) #U00001
 controller.add_user(User("Issaree", "little@gmail.com", controller.hash_password("1t+Mb880"), "0987612345", "KMITL", "2005-05-01")) #U00002
-controller.add_user(User("Supakarn", "third@gmail.com", controller.hash_password("391CUhr="), "0543216789", "KMITL", "2004-12-01")) #
-controller.add_user(User("Peerawat", "mark@gmail.com", controller.hash_password("hL334{0#"), "0987654321", "KMITL", "2004-03-01"))
+controller.add_user(User("Supakarn", "third@gmail.com", controller.hash_password("391CUhr="), "0543216789", "KMITL", "2004-12-01")) #U00003
+controller.add_user(User("Peerawat", "mark@gmail.com", controller.hash_password("hL334{0#"), "0987654321", "KMITL", "2004-03-01")) #U00004
 
 controller.create_booking("U00001", "FI00001")
 controller.fill_info("U00001", "FI00001", "B00001", "1A", "30kg", "male", "0812895077", "Supakarn Tantichawa-ochanon", "2004-08-12", "123456")
