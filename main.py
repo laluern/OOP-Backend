@@ -7,13 +7,16 @@ if __name__ == "__main__":
 
 ############################################################################################
 
-#TODO get_available_seat
+# #TODO view_my_booking & view_personal_info
+# testuser = controller.search_user_by_user_id("U00001")
+# print(testuser.view_my_bookings())
+# print(testuser.view_personal_info())
+
+# #TODO get_available_seat
 # print(controller.get_available_seat("FI00001"))
 
-# #TODO seacrh_flgiht
-# print(controller.search_flight("Suvarnabhumi", "Chiang Mai", "2024-04-01", 1))
-# print(controller.search_flight("Chiang Mai", "Suvarnabhumi", "2024-04-01", 1))
-# print(controller.search_flight("Suvarnabhumi", "Chiang Mai", "2024-04-01", 1, "A1000"))
+#TODO seacrh_flgiht
+print(controller.search_flight("Suvarnabhumi", "Chiang Mai", "2024-04-01", 1, "A1000"))
 
 # #TODO sort_flight
 # flight_list = controller.search_flight("Suvarnabhumi", "Chiang Mai", "2024-04-01", 1)
@@ -39,13 +42,13 @@ if __name__ == "__main__":
 # print(controller.booking_details("U00001", "B00001"))
 
 # #TODO payment ถ้าจะเทสต้องไปเปลี่ยนวิธีดึงตัวแปลใน creditcard หรือ mobilebanking
-info = {
-    "card_holder_name": "Supakarn",
-    "card_no": "191",
-    "expiration_date": "2032-10-10",
-    "security_code": "123"
-}
-print(controller.pay("U00001", "B00001", controller.booking_details("U00001", "B00001"),0,info))
+# info = {
+#     "card_holder_name": "Supakarn",
+#     "card_no": "191",
+#     "expiration_date": "2032-10-10",
+#     "security_code": "123"
+# }
+# print(controller.pay("U00001", "B00001", controller.booking_details("U00001", "B00001"),0,info))
 
 # #TODO register 
 # user_data_register = {
