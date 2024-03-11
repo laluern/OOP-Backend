@@ -24,6 +24,25 @@ app.add_middleware(
 flight_list = []
 Booking_details = None
 
+
+@app.get("/{user_id}/view_personal_info")
+def view_personal_info(user_id):
+    try:
+        user = controller.search_user_by_user_id(user_id)
+        if user:
+            return user.view_personal_info()
+    except:
+        return "could not reach account details"
+
+@app.get("/{user_id}/view_my_bookings")
+def view_my_bookings(user_id):
+    try:
+        user = controller.search_user_by_user_id(user_id)
+        if user:
+            return user.view_my_bookings()
+    except:
+        return "could not reach booking details"     
+    
 @app.post("/search_flight")
 def search_flight(dto:dto_search_flight):
     try:
@@ -43,8 +62,8 @@ def select_flight(sort_by:str):
     except:
         return "could not find a flight"
 
-@app.get("/select_seat")
-def select_seat(flight_instance_no:str):
+@app.get("/{flight_instance_no}/select_seat")
+def select_seat(flight_instance_no):
     return controller.get_seat_data(flight_instance_no)
 
 @app.post("/{user_id}/{flight_instance_no}/create_booking")
@@ -74,15 +93,6 @@ def booking_details(user_id, booking_no):
             return Booking_details
     except:
         return "could not reach booking details"
-
-@app.get("/{user_id}/view_account_details")
-def view_account_details(user_id):
-    try:
-        user = controller.search_user_by_user_id(user_id)
-        if user:
-            return user.view_account_details()
-    except:
-        return "could not reach account details"
 
 @app.put("/{user_id}/payment_method/creditcard")
 def card_paid(user_id, booking_id, card_info:card_info):

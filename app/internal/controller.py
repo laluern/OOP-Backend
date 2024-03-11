@@ -154,7 +154,7 @@ class Controller:
     
             booking.add_payment(transaction)
             booking.set_booking_status()
-            return  [booking.booking_status,booking.payment,passengers[1].boarding_pass.seat.is_reserved]
+            return  [booking.booking_status,booking.payment,passengers[0].boarding_pass.seat.is_reserved]
         else:
             return "Insufficient funds"
 

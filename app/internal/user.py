@@ -11,22 +11,23 @@ class User():
         self.__phone_number = phone_number
         User.user_number += 1
     
-    def view_account_details(self):
-        account_detail = []
-        booking_info_list = []
-        for that_booking in self.__booking_list:
-            booking_info = []
-            booking_info.append(that_booking.booking_no)
-            booking_info.append(that_booking.departure)
-            booking_info.append(that_booking.destination)
-            booking_info.append(that_booking.departure_time)
-            booking_info.append(that_booking.arriving_time)
-            booking_info_list.append(booking_info)
+    def view_personal_info(self):
+        personal_details = {
+            "full_name" : self.__full_name,
+            "email" : self.__email,
+            "phone_number" : self.__phone_number
+        }
+        return personal_details
         
-        account_detail.append(self.__email)
-        account_detail.append(self.__user_id)
-        account_detail.append(booking_info_list)
-        return account_detail
+    def view_my_bookings(self):
+        booking_details_list = {}
+        for booking in self.__booking_list:
+            booking_details_list[booking.booking_no] = {}
+            booking_details_list[booking.booking_no]["departure"] = booking.departure
+            booking_details_list[booking.booking_no]["destination"] = booking.destination
+            booking_details_list[booking.booking_no]["departure_time"] = booking.departure_time
+            booking_details_list[booking.booking_no]["arriving_time"] = booking.arriving_time
+        return booking_details_list
             
     def add_booking(self, booking):
         if isinstance(booking, Booking):
