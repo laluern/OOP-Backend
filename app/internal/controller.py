@@ -51,11 +51,13 @@ class Controller:
                     discount_price = lowest_price
 
                     if promocode != "":
-                        for cur_promocode in Promocode.promocode_list:
-                            if cur_promocode.code == promocode:
-                                discount_price =  lowest_price - (lowest_price * (cur_promocode.discount/100))
-                                break
-                        flight_list[flight_instance.flight_instance_no] = [departure.airport_code, flight_departure_time, destination.airport_code, flight_destination_time, int(duration.total_seconds()), float(lowest_price), float(discount_price)]
+                        if self.check_expire_date(promocode):
+                            for cur_promocode in Promocode.promocode_list:
+                                if cur_promocode.code == promocode:
+                                    discount_price =  lowest_price - (lowest_price * (cur_promocode.discount/100))
+                                    break
+                            flight_list[flight_instance.flight_instance_no] = [departure.airport_code, flight_departure_time, destination.airport_code, flight_destination_time, int(duration.total_seconds()), float(lowest_price), float(discount_price)]
+                        else: return "promo code is expired"
                     else:
                         flight_list[flight_instance.flight_instance_no] = [departure.airport_code, flight_departure_time, destination.airport_code, flight_destination_time, int(duration.total_seconds()), float(lowest_price), float(discount_price)]
         return flight_list
@@ -172,6 +174,14 @@ class Controller:
         new_user = User(full_name, email, password, phone_number, address, birth_date)
         self.add_user(new_user)
         return new_user
+
+    def check_expire_date(self, promocode):
+        for cur_promocode in Promocode.promocode_list:
+            if cur_promocode.code == promocode:
+                if cur_promocode.expire_date > datetime.now():
+                    return True
+                else: return False
+
 
     def hash_password(self, password):
         return hash(password)   

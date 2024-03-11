@@ -30,7 +30,7 @@ controller.add_airplane(Airplane(60)) #A00010
 controller.add_airplane(Airplane(60)) #A00011
 controller.add_airplane(Airplane(60)) #A00012
 
-Promocode('A1000', 10, datetime(2029, 1, 1))
+Promocode('A1000', 10, datetime(2020, 1, 1))
 Promocode('A2000', 10, datetime(2029, 1, 1))
 Promocode('A3000', 10, datetime(2029, 1, 1))
 Promocode('B1000', 20, datetime(2029, 1, 1))
@@ -70,6 +70,7 @@ controller.add_user(User("Peerawat", "mark@gmail.com", controller.hash_password(
 controller.create_booking("U00001", "FI00001")
 controller.fill_info("U00001", "FI00001", "B00001", "1A", "30kg", "male", "0812895077", "Supakarn Tantichawa-ochanon", "2004-08-12", "123456")
 controller.booking_details("U00001", "B00001")
+
 # info = {
 #     "card_holder_name": "Supakarn",
 #     "card_no": "191",

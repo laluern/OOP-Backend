@@ -44,5 +44,5 @@ class card_info(BaseModel):
 class bank_account_info(BaseModel):
   owner_name: str
   tel_no: str
-  account_id: str
+  account_no: str
   password: str

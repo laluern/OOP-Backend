@@ -100,8 +100,7 @@ def card_paid(user_id, booking_id, card_info:card_info):
     try:
         payment = controller.pay(user_id, booking_id, Booking_details, 0, card_info)
         if payment:
-            return {f"message: {payment} is successfull"}
-            
+            return {f"message: {payment} is successfull"}      
     except:
         return "card payment failed" 
 
