@@ -73,9 +73,10 @@ class Controller:
     
     def get_seat_data(self, flight_instance_no):
         flight_instance = self.search_flight_instance_by_flight_instance_no(flight_instance_no)
-        flight_instance.search_show_seat_by_seat_no("1A").reserve_seat()
-        flight_instance.search_show_seat_by_seat_no("3B").reserve_seat()
-        flight_instance.search_show_seat_by_seat_no("6E").reserve_seat()
+        if flight_instance_no == "FI00001":
+            flight_instance.search_show_seat_by_seat_no("1A").reserve_seat()
+            flight_instance.search_show_seat_by_seat_no("3B").reserve_seat()
+            flight_instance.search_show_seat_by_seat_no("6E").reserve_seat()
         seat_data = {}
         for show_seat in flight_instance.show_seat_list:
             seat_data[show_seat.row + show_seat.column] = {"seat_type" : show_seat.seat_type,
@@ -229,11 +230,20 @@ class Controller:
         for flight in self.__flight_list:
             if flight.flight_no == flight_no:
                 return flight
+    
+    def search_flight_no_by_flight_instance_no(self, flight_instnace_no):
+        flight_instnace = self.search_flight_instance_by_flight_instance_no(flight_instnace_no)
+        for flight in self.__flight_list:
+            if flight.departure == flight_instnace.departure and flight.destination == flight_instnace.destination:
+                return flight.flight_no
             
     def show_flight_format(self, flight_instance_list):
         format_flight_instance_list = {}
         for flight_instance_no in flight_instance_list.keys():
+            flight_no = self.search_flight_no_by_flight_instance_no(flight_instance_no)
             format_flight_instance_list[flight_instance_no] = {}
+            format_flight_instance_list[flight_instance_no]["flight_no"] = flight_no
+            format_flight_instance_list[flight_instance_no]["flight_instance_no"] = flight_instance_no
             format_flight_instance_list[flight_instance_no]["departure"] = flight_instance_list[flight_instance_no][0]
             format_flight_instance_list[flight_instance_no]["departure_time"] = flight_instance_list[flight_instance_no][1].strftime("%Y-%m-%d %H:%M")
             format_flight_instance_list[flight_instance_no]["destination"] = flight_instance_list[flight_instance_no][2]
@@ -261,7 +271,9 @@ class Controller:
 
     def add_flight_instance_list(self, flight_no, departure_time, destination_time, airplane):
         flight = self.search_flight_by_flight_no(flight_no)
-        self.__flight_instance_list.append(FlightInstance(flight.departure, flight.destination, flight.flight_no, departure_time, destination_time, airplane))
+        flight_instance = FlightInstance(flight.departure, flight.destination, flight.flight_no, departure_time, destination_time, airplane)
+        self.__flight_instance_list.append(flight_instance)
+        return flight_instance.flight_instance_no
         
     def add_admin(self, admin):
         self.__admin_list.append(admin)
