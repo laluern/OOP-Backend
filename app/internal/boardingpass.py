@@ -20,6 +20,26 @@ class BoardingPass:
         self.__seat = seat
     
     @property
+    def flight_instance_no(self):
+        return self.__flight_instance_no
+    
+    @property
+    def destination(self):
+        return self.__destination
+    
+    @property
+    def departure(self):
+        return self.__departure
+    
+    @property
+    def departure_time(self):
+        return self.__departure_time
+    
+    @property
+    def destination_time(self):
+        return self.__destination_time
+
+    @property
     def seat(self):
         return self.__seat
     

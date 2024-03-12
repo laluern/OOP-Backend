@@ -68,15 +68,15 @@ for number in range(1, 12, 2):
         flight_no = f"F{number + 1 :05d}"
 
         flight_instance_no = controller.add_flight_instance_list(flight_no,datetime(2024, 4, day, 9, 35, 0), datetime(2024, 4, day, 11, 0, 0), "A00001")
-        controller.set_seat_price(flight_instance_no, 1200)
+        controller.set_seat_price(flight_instance_no, 1100)
         flight_instance_no = controller.add_flight_instance_list(flight_no,datetime(2024, 4, day, 11, 50, 0), datetime(2024, 4, day, 13, 10, 0), "A00002")
-        controller.set_seat_price(flight_instance_no, 1500)
+        controller.set_seat_price(flight_instance_no, 1300)
         flight_instance_no = controller.add_flight_instance_list(flight_no,datetime(2024, 4, day, 14, 20, 0), datetime(2024, 4, day, 15, 35, 0), "A00003")
-        controller.set_seat_price(flight_instance_no, 1600)
+        controller.set_seat_price(flight_instance_no, 1500)
         flight_instance_no = controller.add_flight_instance_list(flight_no,datetime(2024, 4, day, 17, 35, 0), datetime(2024, 4, day, 18, 55, 0), "A00004")
         controller.set_seat_price(flight_instance_no, 1400)
         flight_instance_no = controller.add_flight_instance_list(flight_no,datetime(2024, 4, day, 22, 30, 0), datetime(2024, 4, day, 23, 55, 0), "A00005")
-        controller.set_seat_price(flight_instance_no, 1300)
+        controller.set_seat_price(flight_instance_no, 1200)
 
 # controller.register("Peerawat Ingkhasantatikul", "66011442@kmitl.ac.th", "123456789", "0812895077", "KMITL", "2004-08-12")
 
@@ -86,7 +86,7 @@ controller.add_user(User("Supakarn", "third@gmail.com", controller.hash_password
 controller.add_user(User("Peerawat", "mark@gmail.com", controller.hash_password("1234"), "0987654321", "KMITL", "2004-03-01")) #U00004
 
 controller.create_booking("U00001", "FI00001")
-controller.fill_info("U00001", "FI00001", "B00001", "1A", "30kg", "male", "0812895077", "Supakarn Tantichawa-ochanon", "2004-08-12", "123456")
+controller.fill_info("U00001", "FI00001", "B00001", "4A", "30kg", "male", "0812895077", "Supakarn Tantichawa-ochanon", "2004-08-12", "123456")
 controller.booking_details("U00001", "B00001")
 
 # info = {

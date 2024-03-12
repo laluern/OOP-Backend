@@ -103,7 +103,7 @@ class Controller:
         if booking:
             if booking.booking_status == "Pending":
                 passenger = Passenger(gender, phone_number, full_name, birth_date, citizen_id)
-                boardingpass = BoardingPass(flight_instance.destination, flight_instance.departure, flight_instance.departure_time, flight_instance.destination_time, flight_instance.flight_instance_no)
+                boardingpass = BoardingPass(flight_instance.destination, flight_instance.departure, flight_instance.departure_time, flight_instance.destination_time, flight_instance.flight_no)
         
                 boardingpass.add_luggage(Luggage(weight))
                 
@@ -283,6 +283,11 @@ class Controller:
             format_flight_instance_list[flight_instance_no]["price"] = flight_instance_list[flight_instance_no][5]
             format_flight_instance_list[flight_instance_no]["discount"] = flight_instance_list[flight_instance_no][6]
         return format_flight_instance_list
+    
+    def view_boarding_pass(self, user_id, booking_id):
+        user = self.search_user_by_user_id(user_id)
+        booking = user.search_booking_by_number(booking_id)
+        return booking.view_passenger_boarding_pass()
 
     def set_seat_price(self, flight_instance_no, base_price):
         flight_instance = self.search_flight_instance_by_flight_instance_no(flight_instance_no)

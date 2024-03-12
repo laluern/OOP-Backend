@@ -29,7 +29,7 @@ class User():
             booking_details_list[booking.booking_no]["destination_time"] = booking.destination_time.strftime("%Y-%m-%d %H:%M")
             booking_details_list[booking.booking_no]["booking_status"] = booking.booking_status
         return booking_details_list
-            
+
     def add_booking(self, booking):
         if isinstance(booking, Booking):
             self.__booking_list.append(booking)

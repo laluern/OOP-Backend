@@ -81,6 +81,16 @@ def cancel_booking(user_id, booking_no:str):
         return "Cancel booking succesfully"
     except:
         return "failed to create booking"
+    
+@app.get("/{user_id}/{booking_no}/view_boarding_pass")
+def view_boarding_pass(user_id, booking_no):
+    try:
+        boarding_pass_list = controller.view_boarding_pass(user_id, booking_no)
+        if boarding_pass_list:
+            return boarding_pass_list
+        return 
+    except:
+        return "failed to view boarding pass"
 
 @app.post("/{user_id}/{booking_no}/{flight_instance_no}/fill_info")
 def fill_info_and_select_package(user_id, booking_no, flight_instance_no, dto:dto_fill_info):
