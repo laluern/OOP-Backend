@@ -25,8 +25,8 @@ class User():
             booking_details_list[booking.booking_no] = {}
             booking_details_list[booking.booking_no]["departure"] = booking.departure
             booking_details_list[booking.booking_no]["destination"] = booking.destination
-            booking_details_list[booking.booking_no]["departure_time"] = booking.departure_time
-            booking_details_list[booking.booking_no]["arriving_time"] = booking.arriving_time
+            booking_details_list[booking.booking_no]["departure_time"] = booking.departure_time.strftime("%Y-%m-%d %H:%M")
+            booking_details_list[booking.booking_no]["destination_time"] = booking.destination_time.strftime("%Y-%m-%d %H:%M")
             booking_details_list[booking.booking_no]["booking_status"] = booking.booking_status
         return booking_details_list
             

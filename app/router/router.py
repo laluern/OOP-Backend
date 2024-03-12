@@ -74,7 +74,7 @@ def create_booking(user_id, flight_instance_no):
     except:
         return "failed to create booking"
 
-@app.post("/{user_id}/cancel_booking")
+@app.put("/{user_id}/cancel_booking")
 def cancel_booking(user_id, booking_no:str):
     try:
         controller.cancel_booking(user_id, booking_no)
