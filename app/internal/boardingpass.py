@@ -1,6 +1,6 @@
 class BoardingPass:
-    def __init__(self, destination, departure, departure_time, destination_time, flight_instance_no):
-        self.__flight_instance_no = flight_instance_no
+    def __init__(self, destination, departure, departure_time, destination_time, flight_no):
+        self.__flight_no = flight_no
         self.__destination = destination
         self.__departure = departure
         self.__departure_time = departure_time
@@ -20,8 +20,8 @@ class BoardingPass:
         self.__seat = seat
     
     @property
-    def flight_instance_no(self):
-        return self.__flight_instance_no
+    def flight_no(self):
+        return self.__flight_no
     
     @property
     def destination(self):

@@ -87,6 +87,7 @@ controller.add_user(User("Peerawat", "mark@gmail.com", controller.hash_password(
 
 controller.create_booking("U00001", "FI00001")
 controller.fill_info("U00001", "FI00001", "B00001", "4A", "30kg", "male", "0812895077", "Supakarn Tantichawa-ochanon", "2004-08-12", "123456")
+controller.fill_info("U00001", "FI00001", "B00001", "4B", "30kg", "male", "0812895077", "Peerawat aaa", "2004-08-12", "123456")
 controller.booking_details("U00001", "B00001")
 
 # info = {
