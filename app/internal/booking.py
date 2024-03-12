@@ -9,12 +9,9 @@ class Booking:
         self.__destination = destination
         self.__departure_time = departure_time
         self.__arriving_time = arriving_time
-        self.__booking_status = False
+        self.__booking_status = "Pending"
         self.__payment = None 
         Booking.booking_number += 1
-
-    def update_booking_status(self):
-        pass
     
     def update_payment(self):
         pass
@@ -25,8 +22,13 @@ class Booking:
     def add_payment(self, payment):
         self.__payment = payment
 
-    def set_booking_status(self):
-        self.__booking_status = True
+    def set_booking_status(self, status):
+        if status == "Pending":
+            self.__booking_status = status
+        elif status == "Cancel":
+            self.__booking_status = status
+        elif status == "Confirm":
+            self.__booking_status = status
 
     @property
     def payment(self):
