@@ -15,8 +15,8 @@ if __name__ == "__main__":
 # #TODO get_available_seat
 # print(controller.get_available_seat("FI00001"))
 
-#TODO seacrh_flgiht
-print(controller.search_flight("Suvarnabhumi", "Chiang Mai", "2024-04-01", 1, "A1000"))
+# #TODO seacrh_flgiht
+# print(controller.search_flight("Suvarnabhumi", "Chiang Mai", "2024-04-01", 1, "A1000"))
 
 # #TODO sort_flight
 # flight_list = controller.search_flight("Suvarnabhumi", "Chiang Mai", "2024-04-01", 1)
@@ -69,3 +69,6 @@ print(controller.search_flight("Suvarnabhumi", "Chiang Mai", "2024-04-01", 1, "A
 #     "password": "1111"
 # }
 # print(controller.verify_login(user_data_login))
+
+# #TODO cancel booking
+# print(controller.cancel_booking("U00001", "B00001"))

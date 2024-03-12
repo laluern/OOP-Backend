@@ -49,8 +49,7 @@ def search_flight(dto:dto_search_flight):
     try:
         global flight_list
         flight_list = controller.search_flight(dto.departure, dto.destination, dto.departure_date, dto.total_passenger, dto.promocode)
-        if flight_list != []:
-            return flight_list
+        return flight_list
     except:
         return "could not matched a flight"
 
@@ -76,10 +75,18 @@ def create_booking(user_id, flight_instance_no):
     except:
         return "failed to create booking"
 
+@app.post("/{user_id}/cancel_booking")
+def cancel_booking(user_id, booking_no:str):
+    try:
+        controller.cancel_booking(user_id, booking_no)
+        return "Cancel booking succesfully"
+    except:
+        return "failed to create booking"
+
 @app.post("/{user_id}/{booking_no}/{flight_instance_no}/fill_info")
 def fill_info_and_select_package(user_id, booking_no, flight_instance_no, dto:dto_fill_info):
     try:
-        fill_infomation = controller.fill_info(user_id, flight_instance_no, dto.gender, dto.tel_no, dto.name, dto.birth_date, dto.citizen_id, dto.package)
+        fill_infomation = controller.fill_info(user_id, flight_instance_no, booking_no, dto.seat_no, dto.package, dto.gender, dto.tel_no, dto.name, dto.birth_date, dto.citizen_id)
         if  fill_infomation:
             return fill_infomation
     except:

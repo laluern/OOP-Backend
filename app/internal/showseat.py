@@ -16,3 +16,6 @@ class ShowSeat(Seat):
     
     def reserve_seat(self):
         self.__is_reserved = True
+
+    def cancel_seat(self):
+        self.__is_reserved = False

@@ -100,17 +100,35 @@ class Controller:
         temporary_seat = flight_instance.search_show_seat_by_seat_no(seat_no)
         user = self.search_user_by_user_id(user_id)
         booking = user.search_booking_by_number(booking_no)
+        if booking:
+            if booking.booking_status == "Pending":
+                passenger = Passenger(gender, phone_number, full_name, birth_date, citizen_id)
+                boardingpass = BoardingPass(flight_instance.destination, flight_instance.departure, flight_instance.departure_time, flight_instance.destination_time, flight_instance.flight_instance_no)
         
-        passenger = Passenger(gender, phone_number, full_name, birth_date, citizen_id)
-        boardingpass = BoardingPass(flight_instance.destination, flight_instance.departure, flight_instance.departure_time, flight_instance.destination_time, flight_instance.flight_instance_no)
-    
-        boardingpass.add_luggage(Luggage(weight))
-            
-        boardingpass.add_seat(temporary_seat)
-        passenger.add_boardingpass(boardingpass)
-        booking.add_passenger(passenger)
-        return "Done"
-    
+                boardingpass.add_luggage(Luggage(weight))
+                
+                boardingpass.add_seat(temporary_seat)
+                passenger.add_boardingpass(boardingpass)
+                booking.add_passenger(passenger)
+                return "Done"
+
+    def cancel_booking(self, user_id, booking_no):
+        user = self.search_user_by_user_id(user_id)
+        booking = user.search_booking_by_number(booking_no)
+        if booking:
+            passengers = booking.passenger
+            if booking.booking_status == "Confirm":
+                for passenger in passengers:
+                    boardingpass = passenger.boarding_pass
+                    seat = boardingpass.seat
+                    seat.cancel_seat()
+                    booking.set_booking_status("Cancel")
+                return "Cancel booking succesfully"
+            else:
+                return "Could not cancel this booking"
+        else:
+            return "Could not find booking"
+
     def booking_details(self, user_id, booking_no):
         booking_details = {}
         user = self.search_user_by_user_id(user_id)
@@ -141,7 +159,8 @@ class Controller:
                       f"seat price (x{total_passenser})" : seat_price,
                       f"luggages price (x{total_luggages})" : luggage_price,
                       f"Summary price" : seat_price + luggage_price
-            }
+            },
+            "status" : booking.booking_status
         }
         return booking_details
 
@@ -159,7 +178,7 @@ class Controller:
                 seat.reserve_seat()
     
             booking.add_payment(transaction)
-            booking.set_booking_status()
+            booking.set_booking_status("Confirm")
             return  [booking.booking_status,booking.payment,passengers[0].boarding_pass.seat.is_reserved]
         else:
             return "Insufficient funds"

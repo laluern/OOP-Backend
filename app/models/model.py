@@ -8,6 +8,7 @@ class dto_search_flight(BaseModel):
     promocode:str
 
 class dto_fill_info(BaseModel):
+    seat_no:str
     gender:str
     tel_no:str
     name:str
