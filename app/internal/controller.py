@@ -156,9 +156,12 @@ class Controller:
             "destination" : booking.destination,
             "departure_time" : booking.departure_time,
             "price" : {
-                      f"seat price (x{total_passenser})" : seat_price,
-                      f"luggages price (x{total_luggages})" : luggage_price,
-                      f"Summary price" : seat_price + luggage_price
+                        "seat price" : seat_price,
+                        "luggages price" : luggage_price,
+                        "Summary price" : seat_price + luggage_price
+                    #   f"seat price (x{total_passenser})" : seat_price,
+                    #   f"luggages price (x{total_luggages})" : luggage_price,
+                    #   f"Summary price" : seat_price + luggage_price
             },
             "status" : booking.booking_status
         }
