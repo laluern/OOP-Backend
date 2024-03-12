@@ -2,13 +2,13 @@ class Booking:
 
     booking_number = 1
     
-    def __init__(self, departure, destination, departure_time, arriving_time):
+    def __init__(self, departure, destination, departure_time, destination_time):
         self.__booking_no = f"B{Booking.booking_number:05d}"
         self.__passenger_list = []
         self.__departure = departure
         self.__destination = destination
         self.__departure_time = departure_time
-        self.__arriving_time = arriving_time
+        self.__destination_time = destination_time
         self.__booking_status = "Pending"
         self.__payment = None 
         Booking.booking_number += 1
@@ -53,19 +53,11 @@ class Booking:
     @property
     def departure(self):
         return self.__departure
-    
-    @property
-    def departure_date(self):
-        return self.__departure_date
 
     @property
     def departure_time(self):
         return self.__departure_time
-
-    @property
-    def arriving_date(self):
-        return self.__arriving_date
     
     @property
-    def arriving_time(self):
-        return self.__arriving_time
+    def destination_time(self):
+        return self.__destination_time

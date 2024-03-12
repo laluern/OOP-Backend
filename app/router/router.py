@@ -74,7 +74,7 @@ def create_booking(user_id, flight_instance_no):
     except:
         return "failed to create booking"
 
-@app.post("/{user_id}/cancel_booking")
+@app.put("/{user_id}/cancel_booking")
 def cancel_booking(user_id, booking_no:str):
     try:
         controller.cancel_booking(user_id, booking_no)
@@ -94,6 +94,7 @@ def fill_info_and_select_package(user_id, booking_no, flight_instance_no, dto:dt
 @app.get("/{user_id}/{booking_no}/booking_details")
 def booking_details(user_id, booking_no):
     try:
+        global Booking_details
         Booking_details = controller.booking_details(user_id, booking_no)
         if Booking_details:
             return Booking_details
@@ -103,11 +104,9 @@ def booking_details(user_id, booking_no):
 @app.put("/{user_id}/payment_method/creditcard")
 def card_paid(user_id, booking_id, card_info:card_info):
     try:
-        Booking_details = controller.booking_details(user_id, booking_id)
         payment = controller.pay(user_id, booking_id, Booking_details, 0, card_info)
         if payment:
-            return "card payment is successful"
-            # return {f"message: {payment} is successfull"}      
+            return {f"message: {payment} is successfull"}      
     except:
         return "card payment failed" 
 
