@@ -9,6 +9,7 @@ class Passenger:
 
     def add_boardingpass(self, boardingpass):
         self.__boardingpass = boardingpass
+        
     @property
     def name(self):
         return self.__name

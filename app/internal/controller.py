@@ -174,6 +174,7 @@ class Controller:
         summary_price = booking_details["price"]["Summary price"]
         payment = deepcopy(self.__payment_list[payment_method])
         transaction = Payment(booking_no, summary_price)
+        transaction.set_payment_method(payment_method)
         if payment.processing_payment(summary_price, info) == "Payment successful":
 
             for passenger in passengers:
@@ -182,7 +183,7 @@ class Controller:
     
             booking.add_payment(transaction)
             booking.set_booking_status("Confirm")
-            return  [booking.booking_status,booking.payment,passengers[0].boarding_pass.seat.is_reserved]
+            return "Done"
         else:
             return "Insufficient funds"
 

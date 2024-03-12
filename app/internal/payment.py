@@ -4,6 +4,12 @@ class Payment:
         self.__booking_no = booking_no
         self.__price_summary = price_summary
         self.__transaction_id = f"T{Payment.transaction_number:05d}"
+        self.__transaction_payment_method = None
+
+
+    @property
+    def payment_method(self):
+        return self.__transaction_payment_method
 
     @property
     def price_summary(self):
@@ -12,3 +18,9 @@ class Payment:
     @property
     def booking_no(self):
         return self.__booking_no
+
+    def set_payment_method(self, method):
+        if method == 0:
+            self.__transaction_payment_method = "CreditCard"
+        elif method == 1:
+            self.__transaction_payment_method = "MobileBanking"

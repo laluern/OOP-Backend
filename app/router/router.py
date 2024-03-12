@@ -5,7 +5,7 @@ from ..database.database import controller
 from fastapi.middleware.cors import CORSMiddleware
 import json
 
-app = FastAPI()
+app = FastAPI(title="MeltAirline")
 
 origins = [
     "http://localhost:5173",
@@ -25,7 +25,7 @@ app.add_middleware(
 flight_list = []
 
 
-@app.get("/{user_id}/view_personal_info")
+@app.get("/{user_id}/view_personal_info", tags=["Users"])
 def view_personal_info(user_id):
     try:
         user = controller.search_user_by_user_id(user_id)
@@ -34,7 +34,7 @@ def view_personal_info(user_id):
     except:
         return "could not reach account details"
 
-@app.get("/{user_id}/view_my_bookings")
+@app.get("/{user_id}/view_my_bookings", tags=["Users"])
 def view_my_bookings(user_id):
     try:
         user = controller.search_user_by_user_id(user_id)
@@ -43,7 +43,7 @@ def view_my_bookings(user_id):
     except:
         return "could not reach booking details"     
     
-@app.post("/search_flight")
+@app.post("/search_flight", tags=["Filghts"])
 def search_flight(dto:dto_search_flight):
     try:
         global flight_list
@@ -52,7 +52,7 @@ def search_flight(dto:dto_search_flight):
     except:
         return "could not matched a flight"
 
-@app.get("/select_flight")
+@app.get("/select_flight", tags=["Filghts"])
 def select_flight(sort_by:str):
     try:
         sorted_flight = controller.sort_flight(flight_list, sort_by)
@@ -61,11 +61,11 @@ def select_flight(sort_by:str):
     except:
         return "could not find a flight"
 
-@app.get("/{flight_instance_no}/select_seat")
+@app.get("/{flight_instance_no}/select_seat" , tags=["Booking"])
 def select_seat(flight_instance_no):
     return controller.get_seat_data(flight_instance_no)
 
-@app.post("/{user_id}/{flight_instance_no}/create_booking")
+@app.post("/{user_id}/{flight_instance_no}/create_booking", tags=["Booking"])
 def create_booking(user_id, flight_instance_no):
     try:
         booking = controller.create_booking(user_id, flight_instance_no)
@@ -74,7 +74,7 @@ def create_booking(user_id, flight_instance_no):
     except:
         return "failed to create booking"
 
-@app.put("/{user_id}/cancel_booking")
+@app.put("/{user_id}/cancel_booking", tags=["Booking"])
 def cancel_booking(user_id, booking_no:str):
     try:
         controller.cancel_booking(user_id, booking_no)
@@ -82,7 +82,7 @@ def cancel_booking(user_id, booking_no:str):
     except:
         return "failed to create booking"
     
-@app.get("/{user_id}/{booking_no}/view_boarding_pass")
+@app.get("/{user_id}/{booking_no}/view_boarding_pass" , tags=["Users"])
 def view_boarding_pass(user_id, booking_no):
     try:
         boarding_pass_list = controller.view_boarding_pass(user_id, booking_no)
@@ -92,7 +92,7 @@ def view_boarding_pass(user_id, booking_no):
     except:
         return "failed to view boarding pass"
 
-@app.post("/{user_id}/{booking_no}/{flight_instance_no}/fill_info")
+@app.post("/{user_id}/{booking_no}/{flight_instance_no}/fill_info", tags=["Booking"])
 def fill_info_and_select_package(user_id, booking_no, flight_instance_no, dto:dto_fill_info):
     try:
         fill_infomation = controller.fill_info(user_id, flight_instance_no, booking_no, dto.seat_no, dto.package, dto.gender, dto.tel_no, dto.name, dto.birth_date, dto.citizen_id)
@@ -101,7 +101,7 @@ def fill_info_and_select_package(user_id, booking_no, flight_instance_no, dto:dt
     except:
         return "failed to fill infomation"
 
-@app.get("/{user_id}/{booking_no}/booking_details")
+@app.get("/{user_id}/{booking_no}/booking_details", tags=["Booking"])
 def booking_details(user_id, booking_no):
     try:
         global Booking_details
@@ -111,7 +111,7 @@ def booking_details(user_id, booking_no):
     except:
         return "could not reach booking details"
 
-@app.put("/{user_id}/payment_method/creditcard")
+@app.put("/{user_id}/payment_method/creditcard" , tags=["Payment"])
 def card_paid(user_id, booking_id, card_info:card_info):
     try:
         payment = controller.pay(user_id, booking_id, Booking_details, 0, card_info)
@@ -120,7 +120,7 @@ def card_paid(user_id, booking_id, card_info:card_info):
     except:
         return "card payment failed" 
 
-@app.put("/{user_id}/payment_method/mobilebanking")
+@app.put("/{user_id}/payment_method/mobilebanking", tags=["Payment"])
 def mobilebanking_paid(user_id, booking_id, bank_account_info:bank_account_info):
     try:
         Booking_details = controller.booking_details(user_id, booking_id)
@@ -131,7 +131,7 @@ def mobilebanking_paid(user_id, booking_id, bank_account_info:bank_account_info)
     except:
         return "mobilebanking payment failed" 
 
-@app.post("/login")
+@app.post("/login", tags=["Sign in/Sign up"])
 def login(user_data: dto_login):
     try:
         user = controller.verify_login(user_data)
@@ -142,7 +142,7 @@ def login(user_data: dto_login):
     except:
         return "please try again"  
 
-@app.post("/register")
+@app.post("/register", tags=["Sign in/Sign up"])
 def create_user(user_data: dto_register):
     try :
         if controller.verify_username(user_data.email) == True:
