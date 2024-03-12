@@ -95,6 +95,7 @@ def fill_info_and_select_package(user_id, booking_no, flight_instance_no, dto:dt
 @app.get("/{user_id}/{booking_no}/booking_details")
 def booking_details(user_id, booking_no):
     try:
+
         Booking_details = controller.booking_details(user_id, booking_no)
         if Booking_details:
             return Booking_details
