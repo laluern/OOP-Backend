@@ -117,7 +117,7 @@ class Controller:
         booking = user.search_booking_by_number(booking_no)
         if booking:
             passengers = booking.passenger
-            if booking.booking_status == "Confirm":
+            if booking.booking_status == "Confirm" or booking.booking_status == "Pending":
                 for passenger in passengers:
                     boardingpass = passenger.boarding_pass
                     seat = boardingpass.seat
