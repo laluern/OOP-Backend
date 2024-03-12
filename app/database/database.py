@@ -30,7 +30,7 @@ controller.add_airplane(Airplane(60)) #A00010
 controller.add_airplane(Airplane(60)) #A00011
 controller.add_airplane(Airplane(60)) #A00012
 
-Promocode('A1000', 10, datetime(2029, 1, 1))
+Promocode('A1000', 10, datetime(2020, 1, 1))
 Promocode('A2000', 10, datetime(2029, 1, 1))
 Promocode('A3000', 10, datetime(2029, 1, 1))
 Promocode('B1000', 20, datetime(2029, 1, 1))
