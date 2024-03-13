@@ -37,13 +37,14 @@ class Booking:
             boarding_pass = passenger.boarding_pass
             boarding_pass_list[f"Passenger {number}"] = {}
             boarding_pass_list[f"Passenger {number}"]["name"] = passenger.name
-            boarding_pass_list[f"Passenger {number}"]["flight_instance_no"] = boarding_pass.flight_instance_no
+            boarding_pass_list[f"Passenger {number}"]["flight_no"] = boarding_pass.flight_no
             boarding_pass_list[f"Passenger {number}"]["departure"] = boarding_pass.departure
             boarding_pass_list[f"Passenger {number}"]["destination"] = boarding_pass.destination
             boarding_pass_list[f"Passenger {number}"]["departure_time"] = boarding_pass.departure_time.strftime("%Y-%m-%d %H:%M")
             boarding_pass_list[f"Passenger {number}"]["destination_time"] = boarding_pass.destination_time.strftime("%Y-%m-%d %H:%M")
             boarding_pass_list[f"Passenger {number}"]["luggage"] = boarding_pass.luggage.weight
             boarding_pass_list[f"Passenger {number}"]["seat"] = boarding_pass.seat.row + boarding_pass.seat.column
+            number += 1
         return boarding_pass_list
 
     @property

@@ -1,9 +1,9 @@
 from app.database.database import controller
 
-import uvicorn
+# import uvicorn
 
-if __name__ == "__main__":
-    uvicorn.run("app.router.router:app", host="127.0.0.1", port=8000, log_level="info")
+# if __name__ == "__main__":
+#     uvicorn.run("app.router.router:app", host="127.0.0.1", port=8000, log_level="info")
 
 ############################################################################################
 
@@ -81,4 +81,4 @@ print(controller.booking_details("U00001", "B00001"))
 # #TODO cancel booking
 # print(controller.cancel_booking("U00001", "B00001"))
 
-# print(controller.view_boarding_pass("U00001", "B00001"))
+print(controller.view_boarding_pass("U00001", "B00001"))
