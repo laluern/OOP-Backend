@@ -9,7 +9,7 @@ from .boardingpass import BoardingPass
 from .luggage import Luggage
 from .seat import Seat
 from .flightinstance import FlightInstance
-from .payment import Payment
+from .transaction import Transaction
 from .creditcard import CreditCard
 from .mobilebanking import MobileBanking
 
@@ -176,8 +176,7 @@ class Controller:
         passengers = booking.passenger
         summary_price = booking_details["price"]["Summary price"]
         payment = deepcopy(self.__payment_list[payment_method])
-        transaction = Payment(booking_no, summary_price)
-        transaction.set_payment_method(payment_method)
+        transaction = Transaction(booking_no, summary_price, payment)
         if payment.processing_payment(summary_price, info) == "Payment successful":
 
             for passenger in passengers:

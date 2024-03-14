@@ -9,10 +9,10 @@ class CreditCard(Payment):
         self.__limit = None
 
     def processing_payment(self, price_summary, info):
-        self.__card_holder_name = info["card_holder_name"]
-        self.__card_no = info["card_no"]
-        self.__expiration_date = info["expiration_date"]
-        self.__security_code = info["security_code"]
+        self.__card_holder_name = info.card_holder_name
+        self.__card_no = info.card_no
+        self.__expiration_date = info.expiration_date
+        self.__security_code = info.security_code
         self.__limit = 200000
 
         if self.__limit >= price_summary:
