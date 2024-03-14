@@ -44,7 +44,7 @@ class Controller:
                 if len(available_seat) >= total_passenger:
                     lowest__price_seat = min(available_seat, key=lambda seat_no: flight_instance.search_show_seat_by_seat_no(seat_no).price)
                     lowest_price = flight_instance.search_show_seat_by_seat_no(lowest__price_seat).price
-                   
+                    
                     flight_departure_time = flight_instance.departure_time
                     flight_destination_time = flight_instance.destination_time
                     duration = flight_destination_time - flight_departure_time

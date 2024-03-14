@@ -22,13 +22,17 @@ class User():
     def view_my_bookings(self):
         booking_details_list = {}
         for booking in self.__booking_list:
+            passengers = booking.passenger
+            for cur_passenger in passengers:
+                if cur_passenger.boarding_pass.seat.is_reserved == True:
+                    booking.set_booking_status("Cancel")
             booking_details_list[booking.booking_no] = {}
             booking_details_list[booking.booking_no]["departure"] = booking.departure
             booking_details_list[booking.booking_no]["destination"] = booking.destination
             booking_details_list[booking.booking_no]["departure_time"] = booking.departure_time.strftime("%Y-%m-%d %H:%M")
             booking_details_list[booking.booking_no]["destination_time"] = booking.destination_time.strftime("%Y-%m-%d %H:%M")
             booking_details_list[booking.booking_no]["booking_status"] = booking.booking_status
-        return booking_details_list
+            return booking_details_list
 
     def add_booking(self, booking):
         if isinstance(booking, Booking):
