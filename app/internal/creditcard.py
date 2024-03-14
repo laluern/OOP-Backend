@@ -1,12 +1,7 @@
 from .payment import Payment
 
 class CreditCard(Payment):
-    def __init__ (self):
-        self.__card_holder_name = None
-        self.__card_no = None
-        self.__expiration_date = None
-        self.__security_code = None
-        self.__limit = None
+    type_of_payment = "creditcard"
 
     def processing_payment(self, price_summary, info):
         self.__card_holder_name = info.card_holder_name

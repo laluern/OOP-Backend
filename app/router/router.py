@@ -112,24 +112,25 @@ def booking_details(user_id, booking_no):
 
 @app.put("/{user_id}/payment_method/creditcard" , tags=["Payment"])
 def card_paid(user_id, booking_id, card_info:card_info):
-    try:
+    # try:
+        Booking_details = controller.booking_details(user_id, booking_id)
         payment = controller.pay(user_id, booking_id, Booking_details, 0, card_info)
         if payment:
             return "card payment is successful"
             # return {f"message: {payment} is successfull"}      
-    except:
-        return "card payment failed" 
+    # except:
+    #     return "card payment failed" 
 
 @app.put("/{user_id}/payment_method/mobilebanking", tags=["Payment"])
 def mobilebanking_paid(user_id, booking_id, bank_account_info:bank_account_info):
-    try:
+    # try:
         Booking_details = controller.booking_details(user_id, booking_id)
         payment = controller.pay(user_id, booking_id, Booking_details, 1, bank_account_info)
         if payment:
             return "mobilebanking payment is successful"
             # return {"message": f"{payment} is successfull"}
-    except:
-        return "mobilebanking payment failed" 
+    # except:
+    #     return "mobilebanking payment failed" 
 
 @app.post("/login", tags=["Sign in/Sign up"])
 def login(user_data: dto_login):

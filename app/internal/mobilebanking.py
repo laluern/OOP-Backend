@@ -1,12 +1,7 @@
 from .payment import Payment
 
 class MobileBanking(Payment):
-    def __init__ (self):
-        self.__owner_name = None
-        self.__tel_no = None
-        self.__account_id = None
-        self.__password = None
-        self.__balance = None
+    type_of_payment = "mobilebanking"
     
     def processing_payment(self, price_summary, info):
         self.__owner_name = info.owner_name
