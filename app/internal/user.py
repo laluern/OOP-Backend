@@ -9,6 +9,8 @@ class User():
         self.__booking_list = []
         self.__password = password
         self.__phone_number = phone_number
+        self.__address = address
+        self.__birth_date = birth_date
         User.user_number += 1
     
     def view_personal_info(self):
