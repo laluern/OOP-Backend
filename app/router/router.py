@@ -104,10 +104,9 @@ def fill_info_and_select_package(user_id, booking_no, flight_instance_no, dto:dt
 @app.get("/{user_id}/{booking_no}/booking_details", tags=["Booking"])
 def booking_details(user_id, booking_no):
     try:
-        global Booking_details
-        Booking_details = controller.booking_details(user_id, booking_no)
-        if Booking_details:
-            return Booking_details
+        booking_details = controller.booking_details(user_id, booking_no)
+        if booking_details:
+            return booking_details
     except:
         return "could not reach booking details"
 
