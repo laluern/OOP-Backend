@@ -23,7 +23,7 @@ class Controller:
         self.__admin_list = []
         self.__airplane_list = []
         self.__airport_list = []
-        self.__payment_list = [CreditCard(),MobileBanking()]
+        self.__payment_list = [CreditCard(), MobileBanking()]
     
     def get_available_seat(self, flight_instance_no):
         available_seat = []
@@ -51,15 +51,21 @@ class Controller:
                     discount_price = lowest_price
 
                     if promocode != "":
-                        if self.check_expire_date(promocode):
+                        if self.check_expire_date(promocode) == True:
                             for cur_promocode in Promocode.promocode_list:
                                 if cur_promocode.code == promocode:
                                     discount_price =  lowest_price - (lowest_price * (cur_promocode.discount/100))
                                     break
                             flight_list[flight_instance.flight_instance_no] = [departure.airport_code, flight_departure_time, destination.airport_code, flight_destination_time, int(duration.total_seconds()), float(lowest_price), float(discount_price)]
-                        else: return "promo code is expired"
+                        elif self.check_expire_date(promocode) == False:
+                            return "Promocode is expired"
+                        else: 
+                            return "Promocode is invalid"
+
                     else:
                         flight_list[flight_instance.flight_instance_no] = [departure.airport_code, flight_departure_time, destination.airport_code, flight_destination_time, int(duration.total_seconds()), float(lowest_price), float(discount_price)]
+        if flight_list == {}:
+            return "Flight not found"
         return flight_list
     
     def sort_flight(self, flight_list, sort_by):
@@ -204,7 +210,9 @@ class Controller:
             if cur_promocode.code == promocode:
                 if cur_promocode.expire_date > datetime.now():
                     return True
-                else: return False
+                else: 
+                    return False
+        return "Not Found"
 
 
     def hash_password(self, password):
