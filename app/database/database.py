@@ -90,6 +90,11 @@ controller.fill_info("U00001", "FI00001", "B00001", "4A", "30kg", "male", "08128
 controller.fill_info("U00001", "FI00001", "B00001", "4B", "30kg", "male", "0812895077", "Peerawat aaa", "2004-08-12", "123456")
 controller.booking_details("U00001", "B00001")
 
+controller.create_booking("U00003", "FI00001")
+controller.fill_info("U00001", "FI00001", "B00001", "4A", "30kg", "male", "0812895077", "Supakarn Tantichawa-ochanon", "2004-08-12", "123456")
+controller.fill_info("U00001", "FI00001", "B00001", "4B", "30kg", "male", "0812895077", "Peerawat aaa", "2004-08-12", "123456")
+controller.booking_details("U00001", "B00001")
+
 # info = {
 #     "card_holder_name": "Supakarn",
 #     "card_no": "191",

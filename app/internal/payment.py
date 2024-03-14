@@ -1,26 +1,14 @@
 class Payment:
-    transaction_number = 1
-    def __init__(self, booking_no, price_summary):
-        self.__booking_no = booking_no
-        self.__price_summary = price_summary
-        self.__transaction_id = f"T{Payment.transaction_number:05d}"
-        self.__transaction_payment_method = None
-
-
-    @property
-    def payment_method(self):
-        return self.__transaction_payment_method
-
-    @property
-    def price_summary(self):
-        return self.__price_summary
-
-    @property
-    def booking_no(self):
-        return self.__booking_no
-
-    def set_payment_method(self, method):
-        if method == 0:
-            self.__transaction_payment_method = "CreditCard"
-        elif method == 1:
-            self.__transaction_payment_method = "MobileBanking"
+    def __init__(self):
+        if self.type_of_payment == "creditcard":
+            self.__owne_name = None
+            self.__card_no = None
+            self.__expiration_date = None
+            self.__security_code = None
+            self.__limit = None
+        elif self.type_of_payment == "mobilebanking":
+            self.__owner_name = None
+            self.__tel_no = None
+            self.__account_id = None
+            self.__password = None
+            self.__balance = None

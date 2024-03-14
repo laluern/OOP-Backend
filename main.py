@@ -41,14 +41,17 @@ if __name__ == "__main__":
 # #TODO booking_details
 # print(controller.booking_details("U00001", "B00001"))
 
-#TODO payment ถ้าจะเทสต้องไปเปลี่ยนวิธีดึงตัวแปลใน creditcard หรือ mobilebanking
+# print(controller.create_booking("U00003", "FI00001"))
+# print(controller.fill_info("U00003", "FI00001", "B00004", "1A", "15kg", "male", "0812895077", "Peerawat Ingkhasantatikul", "2004-08-12", "123456"))
+
+# #TODO payment ถ้าจะเทสต้องไปเปลี่ยนวิธีดึงตัวแปลใน creditcard หรือ mobilebanking
 # info = {
 #     "card_holder_name": "Supakarn",
 #     "card_no": "191",
 #     "expiration_date": "2032-10-10",
 #     "security_code": "123"
 # }
-# print(controller.pay("U00001", "B00001", controller.booking_details("U00001", "B00001"),0,info))
+# print(controller.pay("U00003", "B00004", controller.booking_details("U00003", "B00004"),0,info))
 
 # info = {
 #     "owner_name": "Supakarn",

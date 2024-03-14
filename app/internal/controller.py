@@ -9,7 +9,7 @@ from .boardingpass import BoardingPass
 from .luggage import Luggage
 from .seat import Seat
 from .flightinstance import FlightInstance
-from .payment import Payment
+from .transaction import Transaction
 from .creditcard import CreditCard
 from .mobilebanking import MobileBanking
 
@@ -44,7 +44,7 @@ class Controller:
                 if len(available_seat) >= total_passenger:
                     lowest__price_seat = min(available_seat, key=lambda seat_no: flight_instance.search_show_seat_by_seat_no(seat_no).price)
                     lowest_price = flight_instance.search_show_seat_by_seat_no(lowest__price_seat).price
-                   
+                    
                     flight_departure_time = flight_instance.departure_time
                     flight_destination_time = flight_instance.destination_time
                     duration = flight_destination_time - flight_departure_time
@@ -123,12 +123,15 @@ class Controller:
         booking = user.search_booking_by_number(booking_no)
         if booking:
             passengers = booking.passenger
-            if booking.booking_status == "Confirm" or booking.booking_status == "Pending":
+            if booking.booking_status == "Confirm":
                 for passenger in passengers:
                     boardingpass = passenger.boarding_pass
                     seat = boardingpass.seat
                     seat.cancel_seat()
                     booking.set_booking_status("Cancel")
+                return "Cancel booking succesfully"
+            elif booking.booking_status == "Pending":
+                booking.set_booking_status("Cancel")
                 return "Cancel booking succesfully"
             else:
                 return "Could not cancel this booking"
@@ -179,8 +182,7 @@ class Controller:
         passengers = booking.passenger
         summary_price = booking_details["price"]["Summary price"]
         payment = deepcopy(self.__payment_list[payment_method])
-        transaction = Payment(booking_no, summary_price)
-        transaction.set_payment_method(payment_method)
+        transaction = Transaction(booking_no, summary_price, payment)
         if payment.processing_payment(summary_price, info) == "Payment successful":
 
             for passenger in passengers:

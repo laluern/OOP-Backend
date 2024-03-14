@@ -104,33 +104,33 @@ def fill_info_and_select_package(user_id, booking_no, flight_instance_no, dto:dt
 @app.get("/{user_id}/{booking_no}/booking_details", tags=["Booking"])
 def booking_details(user_id, booking_no):
     try:
-        global Booking_details
-        Booking_details = controller.booking_details(user_id, booking_no)
-        if Booking_details:
-            return Booking_details
+        booking_details = controller.booking_details(user_id, booking_no)
+        if booking_details:
+            return booking_details
     except:
         return "could not reach booking details"
 
 @app.put("/{user_id}/payment_method/creditcard" , tags=["Payment"])
 def card_paid(user_id, booking_id, card_info:card_info):
-    try:
+    # try:
+        Booking_details = controller.booking_details(user_id, booking_id)
         payment = controller.pay(user_id, booking_id, Booking_details, 0, card_info)
         if payment:
             return "card payment is successful"
             # return {f"message: {payment} is successfull"}      
-    except:
-        return "card payment failed" 
+    # except:
+    #     return "card payment failed" 
 
 @app.put("/{user_id}/payment_method/mobilebanking", tags=["Payment"])
 def mobilebanking_paid(user_id, booking_id, bank_account_info:bank_account_info):
-    try:
+    # try:
         Booking_details = controller.booking_details(user_id, booking_id)
         payment = controller.pay(user_id, booking_id, Booking_details, 1, bank_account_info)
         if payment:
             return "mobilebanking payment is successful"
             # return {"message": f"{payment} is successfull"}
-    except:
-        return "mobilebanking payment failed" 
+    # except:
+    #     return "mobilebanking payment failed" 
 
 @app.post("/login", tags=["Sign in/Sign up"])
 def login(user_data: dto_login):
@@ -149,7 +149,7 @@ def create_user(user_data: dto_register):
         if controller.verify_username(user_data.email) == True:
             new_user = controller.register(user_data.full_name, user_data.email, controller.hash_password(user_data.password), user_data.phone_number, user_data.address, user_data.birth_date)
             if new_user != None:
-                return {"message": f"{new_user.full_name} account created successfully", "status": True}
+                return {"message": f"{new_user.full_name} account created successfully", "user": new_user, "status": True}
             else:
                 return {"message": "Failed to create user"}
         else: return {"message": "Failed to create user"}
