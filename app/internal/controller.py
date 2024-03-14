@@ -117,12 +117,15 @@ class Controller:
         booking = user.search_booking_by_number(booking_no)
         if booking:
             passengers = booking.passenger
-            if booking.booking_status == "Confirm" or booking.booking_status == "Pending":
+            if booking.booking_status == "Confirm":
                 for passenger in passengers:
                     boardingpass = passenger.boarding_pass
                     seat = boardingpass.seat
                     seat.cancel_seat()
                     booking.set_booking_status("Cancel")
+                return "Cancel booking succesfully"
+            elif booking.booking_status == "Pending":
+                booking.set_booking_status("Cancel")
                 return "Cancel booking succesfully"
             else:
                 return "Could not cancel this booking"
