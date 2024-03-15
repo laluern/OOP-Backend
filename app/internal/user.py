@@ -24,7 +24,8 @@ class User():
         for booking in self.__booking_list:
             passengers = booking.passenger
             for cur_passenger in passengers:
-                if cur_passenger.boarding_pass.seat.is_reserved == True:
+                for compare_booking_no in 
+                if cur_passenger.boarding_pass.seat.is_reserved == True and :
                     booking.set_booking_status("Cancel")
             booking_details_list[booking.booking_no] = {}
             booking_details_list[booking.booking_no]["departure"] = booking.departure
