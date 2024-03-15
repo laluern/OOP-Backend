@@ -58,9 +58,9 @@ class Controller:
                                     break
                             flight_list[flight_instance.flight_instance_no] = [departure.airport_code, flight_departure_time, destination.airport_code, flight_destination_time, int(duration.total_seconds()), float(lowest_price), float(discount_price)]
                         elif self.check_expire_date(promocode) == False:
-                            return "PromoCode is expired"
+                            return "Promo code is expired"
                         else: 
-                            return "PromoCode is invalid"
+                            return "Promo code is invalid"
 
                     else:
                         flight_list[flight_instance.flight_instance_no] = [departure.airport_code, flight_departure_time, destination.airport_code, flight_destination_time, int(duration.total_seconds()), float(lowest_price), float(discount_price)]
@@ -307,6 +307,10 @@ class Controller:
 
     def add_airplane(self, airplane):
         self.__airplane_list.append(airplane)
+    
+    @property
+    def airplane_list(self):
+        return self.__airplane_list
 
     def add_flight_instance_list(self, flight_no, departure_time, destination_time, airplane):
         flight = self.search_flight_by_flight_no(flight_no)

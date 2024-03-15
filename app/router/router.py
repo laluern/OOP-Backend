@@ -146,4 +146,3 @@ def create_user(user_data: dto_register):
         else: return {"message": "Failed to create user"}
     except :
         return "please try again"
-

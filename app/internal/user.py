@@ -65,5 +65,3 @@ class User():
     @property
     def user_id(self):
         return self.__user_id
-
-

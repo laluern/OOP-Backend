@@ -70,5 +70,3 @@ class Booking:
 
     def set_booking_status(self, status):
         self.__booking_status = status
-
-        
