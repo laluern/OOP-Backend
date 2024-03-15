@@ -67,6 +67,9 @@ class Airplane:
                             Seat("10", "F", "standard_seat")]
         Airplane.airplane_number += 1
 
+    def count_seat_type(self, seat_type):
+        return len(self.__seat_list[seat_type])
+
     @property
     def seat_list(self):
         return self.__seat_list
@@ -78,6 +81,3 @@ class Airplane:
     @property
     def airplane_id(self):
         return self.__airplane_id
-
-    def count_seat_type(self, seat_type):
-        return len(self.__seat_list[seat_type])

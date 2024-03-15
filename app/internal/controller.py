@@ -168,9 +168,6 @@ class Controller:
                         "seat price" : seat_price,
                         "luggages price" : luggage_price,
                         "Summary price" : seat_price + luggage_price
-                    #   f"seat price (x{total_passenser})" : seat_price,
-                    #   f"luggages price (x{total_luggages})" : luggage_price,
-                    #   f"Summary price" : seat_price + luggage_price
             },
             "status" : booking.booking_status
         }
@@ -234,6 +231,34 @@ class Controller:
                     return user
         return False  
 
+    def show_flight_format(self, flight_instance_list):
+        format_flight_instance_list = {}
+        for flight_instance_no in flight_instance_list.keys():
+            flight_no = self.search_flight_no_by_flight_instance_no(flight_instance_no)
+            format_flight_instance_list[flight_instance_no] = {}
+            format_flight_instance_list[flight_instance_no]["flight_no"] = flight_no
+            format_flight_instance_list[flight_instance_no]["flight_instance_no"] = flight_instance_no
+            format_flight_instance_list[flight_instance_no]["departure"] = flight_instance_list[flight_instance_no][0]
+            format_flight_instance_list[flight_instance_no]["departure_time"] = flight_instance_list[flight_instance_no][1].strftime("%Y-%m-%d %H:%M")
+            format_flight_instance_list[flight_instance_no]["destination"] = flight_instance_list[flight_instance_no][2]
+            format_flight_instance_list[flight_instance_no]["destination_time"] = flight_instance_list[flight_instance_no][3].strftime("%Y-%m-%d %H:%M")
+            hours, remainder = divmod(flight_instance_list[flight_instance_no][4], 3600)
+            minutes, _ = divmod(remainder, 60)
+            format_flight_instance_list[flight_instance_no]["duration"] = f"{hours}h {minutes}m"
+            format_flight_instance_list[flight_instance_no]["price"] = flight_instance_list[flight_instance_no][5]
+            format_flight_instance_list[flight_instance_no]["discount"] = flight_instance_list[flight_instance_no][6]
+        return format_flight_instance_list
+    
+    def view_boarding_pass(self, user_id, booking_id):
+        user = self.search_user_by_user_id(user_id)
+        booking = user.search_booking_by_number(booking_id)
+        return booking.view_passenger_boarding_pass()
+
+    def set_seat_price(self, flight_instance_no, base_price):
+        flight_instance = self.search_flight_instance_by_flight_instance_no(flight_instance_no)
+        airplane = self.search_airplane_by_airplane_id(flight_instance.airplane)
+        flight_instance.set_seat_price(airplane, base_price)
+
     def search_user_by_user_id(self, user_id):
         for user in self.__user_list:
             if user.user_id == user_id:
@@ -279,34 +304,6 @@ class Controller:
         for flight in self.__flight_list:
             if flight.departure == flight_instnace.departure and flight.destination == flight_instnace.destination:
                 return flight.flight_no
-            
-    def show_flight_format(self, flight_instance_list):
-        format_flight_instance_list = {}
-        for flight_instance_no in flight_instance_list.keys():
-            flight_no = self.search_flight_no_by_flight_instance_no(flight_instance_no)
-            format_flight_instance_list[flight_instance_no] = {}
-            format_flight_instance_list[flight_instance_no]["flight_no"] = flight_no
-            format_flight_instance_list[flight_instance_no]["flight_instance_no"] = flight_instance_no
-            format_flight_instance_list[flight_instance_no]["departure"] = flight_instance_list[flight_instance_no][0]
-            format_flight_instance_list[flight_instance_no]["departure_time"] = flight_instance_list[flight_instance_no][1].strftime("%Y-%m-%d %H:%M")
-            format_flight_instance_list[flight_instance_no]["destination"] = flight_instance_list[flight_instance_no][2]
-            format_flight_instance_list[flight_instance_no]["destination_time"] = flight_instance_list[flight_instance_no][3].strftime("%Y-%m-%d %H:%M")
-            hours, remainder = divmod(flight_instance_list[flight_instance_no][4], 3600)
-            minutes, _ = divmod(remainder, 60)
-            format_flight_instance_list[flight_instance_no]["duration"] = f"{hours}h {minutes}m"
-            format_flight_instance_list[flight_instance_no]["price"] = flight_instance_list[flight_instance_no][5]
-            format_flight_instance_list[flight_instance_no]["discount"] = flight_instance_list[flight_instance_no][6]
-        return format_flight_instance_list
-    
-    def view_boarding_pass(self, user_id, booking_id):
-        user = self.search_user_by_user_id(user_id)
-        booking = user.search_booking_by_number(booking_id)
-        return booking.view_passenger_boarding_pass()
-
-    def set_seat_price(self, flight_instance_no, base_price):
-        flight_instance = self.search_flight_instance_by_flight_instance_no(flight_instance_no)
-        airplane = self.search_airplane_by_airplane_id(flight_instance.airplane)
-        flight_instance.set_seat_price(airplane, base_price)
 
     def get_luggage_price(self, weight):
         return int("".join(filter(str.isdigit, weight))) * 30

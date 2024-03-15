@@ -13,6 +13,21 @@ class FlightInstance(Flight):
         self.__gate = None
         FlightInstance.flight_instance_number += 1
 
+    def set_seat_price(self, airplane, base_price):
+        for seat in airplane.seat_list:
+            if seat.seat_type == "hot_seat":
+                self.__show_seat_list.append(ShowSeat(seat.row, seat.column, seat.seat_type, base_price * 1.5))
+            else:
+                if seat.column == "B" or seat.column == "E":
+                    self.__show_seat_list.append(ShowSeat(seat.row, seat.column, seat.seat_type, base_price))
+                else:
+                    self.__show_seat_list.append(ShowSeat(seat.row, seat.column, seat.seat_type, base_price * 1.2))
+
+    def search_show_seat_by_seat_no(self, seat_no):
+        for show_seat in self.__show_seat_list:
+            if (show_seat.row + show_seat.column) == seat_no:
+                return show_seat
+
     @property
     def flight_instance_no(self):
         return self.__flight_instance_no
@@ -39,18 +54,3 @@ class FlightInstance(Flight):
     @property
     def show_seat_list(self):
         return self.__show_seat_list
-    
-    def set_seat_price(self, airplane, base_price):
-        for seat in airplane.seat_list:
-            if seat.seat_type == "hot_seat":
-                self.__show_seat_list.append(ShowSeat(seat.row, seat.column, seat.seat_type, base_price * 1.5))
-            else:
-                if seat.column == "B" or seat.column == "E":
-                    self.__show_seat_list.append(ShowSeat(seat.row, seat.column, seat.seat_type, base_price))
-                else:
-                    self.__show_seat_list.append(ShowSeat(seat.row, seat.column, seat.seat_type, base_price * 1.2))
-
-    def search_show_seat_by_seat_no(self, seat_no):
-        for show_seat in self.__show_seat_list:
-            if (show_seat.row + show_seat.column) == seat_no:
-                return show_seat

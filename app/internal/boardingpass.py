@@ -6,18 +6,17 @@ class BoardingPass:
         self.__departure_time = departure_time
         self.__destination_time = destination_time
         self.__luggage = None
-        self.__gate = None
         self.__seat = None
   
-    @property
-    def luggage(self):
-        return self.__luggage
-
     def add_luggage(self, luggage):
         self.__luggage = luggage
 
     def add_seat(self, seat):
         self.__seat = seat
+
+    @property
+    def luggage(self):
+        return self.__luggage
     
     @property
     def flight_no(self):

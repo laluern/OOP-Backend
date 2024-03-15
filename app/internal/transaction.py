@@ -5,5 +5,3 @@ class Transaction:
         self.__summary_price = summary_price
         self.__payment_method = payment_method
         self.__transaction_id = f"T{Transaction.transaction_number:05d}"
-
-    
