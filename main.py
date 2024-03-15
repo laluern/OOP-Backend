@@ -7,42 +7,42 @@ if __name__ == "__main__":
 
 ###########################################################################################
 
-#TODO view_my_booking & view_personal_info
-testuser = controller.search_user_by_user_id("U00001")
-print(testuser.view_my_bookings())
-print(testuser.view_personal_info())
+# #TODO view_my_booking & view_personal_info
+# testuser = controller.search_user_by_user_id("U00001")
+# print(testuser.view_my_bookings())
+# print(testuser.view_personal_info())
 
-#TODO get_available_seat
-print(controller.get_available_seat("FI00001"))
+# #TODO get_available_seat
+# print(controller.get_available_seat("FI00001"))
 
-#TODO seacrh_flgiht
-print(controller.search_flight("Suvarnabhumi", "Chiang Mai", "2024-04-01", 1, "A2000"))
+# #TODO seacrh_flgiht
+# print(controller.search_flight("Suvarnabhumi", "Chiang Mai", "2024-04-01", 1, "A2000"))
 
-#TODO sort_flight
-flight_list = controller.search_flight("Suvarnabhumi", "Chiang Mai", "2024-04-01", 1)
-print("Cheapest")
-print(controller.sort_flight(flight_list, "Cheapest"))
-print("Fastest")
-print(controller.sort_flight(flight_list, "Fastest"))
-print("Earliest")
-print(controller.sort_flight(flight_list, "Earliest"))
+# #TODO sort_flight
+# flight_list = controller.search_flight("Suvarnabhumi", "Chiang Mai", "2024-04-01", 1)
+# print("Cheapest")
+# print(controller.sort_flight(flight_list, "Cheapest"))
+# print("Fastest")
+# print(controller.sort_flight(flight_list, "Fastest"))
+# print("Earliest")
+# print(controller.sort_flight(flight_list, "Earliest"))
 
-#TODO get_seat_data
-print(controller.get_seat_data("FI00003"))
+# #TODO get_seat_data
+# print(controller.get_seat_data("FI00003"))
 
 
-#TODO create_booking
-print(controller.create_booking("U00001", "FI00001"))
+# #TODO create_booking
+# print(controller.create_booking("U00001", "FI00001"))
 
-#TODO fill_info_and_select_luggage_weight
-print(controller.fill_info("U00001", "FI00001", "B00001", "1A", "15kg", "male", "0812895077", "Peerawat Ingkhasantatikul", "2004-08-12", "123456"))
-print(controller.fill_info("U00001", "FI00001", "B00001", "1A", "30kg", "male", "0812895077", "Supakarn Tantichawa-ochanon", "2004-08-12", "123456"))
+# #TODO fill_info_and_select_luggage_weight
+# print(controller.fill_info("U00001", "FI00001", "B00001", "1A", "15kg", "male", "0812895077", "Peerawat Ingkhasantatikul", "2004-08-12", "123456"))
+# print(controller.fill_info("U00001", "FI00001", "B00001", "1A", "30kg", "male", "0812895077", "Supakarn Tantichawa-ochanon", "2004-08-12", "123456"))
 
-#TODO booking_details
-print(controller.booking_details("U00001", "B00001"))
+# #TODO booking_details
+# print(controller.booking_details("U00001", "B00001"))
 
-print(controller.create_booking("U00003", "FI00001"))
-print(controller.fill_info("U00003", "FI00001", "B00004", "1A", "15kg", "male", "0812895077", "Peerawat Ingkhasantatikul", "2004-08-12", "123456"))
+# print(controller.create_booking("U00003", "FI00001"))
+# print(controller.fill_info("U00003", "FI00001", "B00004", "1A", "15kg", "male", "0812895077", "Peerawat Ingkhasantatikul", "2004-08-12", "123456"))
 
 # #TODO payment ถ้าจะเทสต้องไปเปลี่ยนวิธีดึงตัวแปลใน creditcard หรือ mobilebanking
 # info = {
@@ -54,12 +54,12 @@ print(controller.fill_info("U00003", "FI00001", "B00004", "1A", "15kg", "male", 
 # print(controller.pay("U00003", "B00004", controller.booking_details("U00003", "B00004"),0,info))
 
 # info = {
-#     "owner_name": "Supakarn",
-#     "tel_no": "191",
-#     "account_no": "1111111",
-#     "password": "123"
+#     "card_holder_name": "Supakarn",
+#     "card_no": "191",
+#     "expiration_date": "1111111",
+#     "security_code": "123"
 # }
-# print(controller.pay("U00001", "B00001", controller.booking_details("U00001", "B00001"),1,info))
+# print(controller.pay("U00001", "B00001", controller.booking_details("U00001", "B00001"),0,info))
 
 # #TODO register 
 # user_data_register = {

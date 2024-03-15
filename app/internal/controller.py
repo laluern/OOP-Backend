@@ -23,7 +23,7 @@ class Controller:
         self.__admin_list = []
         self.__airplane_list = []
         self.__airport_list = []
-        self.__payment_list = [CreditCard(), MobileBanking()]
+        self.__payment_list = []
     
     def get_available_seat(self, flight_instance_no):
         available_seat = []
@@ -325,7 +325,10 @@ class Controller:
 
     def add_promocode(self, code):
         PromoCode.promocode_list.append(code)
-    
+
+    def add_payment_list(self, payment):
+        self.__payment_list.append(payment)
+
     @property
     def flight_instance_list(self):
         return self.__flight_instance_list

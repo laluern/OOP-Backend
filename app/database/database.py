@@ -50,6 +50,9 @@ controller.add_flight_list(Flight("Khon Kaen", "Chiang Mai", "F00010"))
 controller.add_flight_list(Flight("Hat Yai", "Khon Kaen", "F00011"))
 controller.add_flight_list(Flight("Khon Kaen", "Hat Yai", "F00012"))
 
+controller.add_payment_list(CreditCard())
+controller.add_payment_list(MobileBanking())
+
 for number in range(1, 12, 2):
     for day in range(1,31):
 
