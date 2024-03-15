@@ -6,8 +6,9 @@ class Luggage:
         self.__luggage_id = f"L{Luggage.luggage_number:05d}"
         Luggage.luggage_number += 1
 
-    def set_owner(self, owner):
-        self.__owner = owner
+    @property
+    def owner(self):
+        return self.__owner
 
     @property
     def luggage_id(self):
@@ -16,3 +17,6 @@ class Luggage:
     @property
     def weight(self):
         return self.__weight
+
+    def set_owner(self, person):
+        self.__owner = person

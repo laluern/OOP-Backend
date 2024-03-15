@@ -5,10 +5,7 @@ class Passenger:
         self.__name = name
         self.__birth_date = birth_date
         self.__citizen_id = citizen_id
-        self.__boardingpass = None
-
-    def add_boardingpass(self, boardingpass):
-        self.__boardingpass = boardingpass
+        self.__boarding_pass = None
         
     @property
     def name(self):
@@ -20,4 +17,8 @@ class Passenger:
 
     @property
     def boarding_pass(self):
-        return self.__boardingpass
+        return self.__boarding_pass
+
+    def set_boarding_pass(self, boardingpass):
+        self.__boarding_pass = boardingpass
+    

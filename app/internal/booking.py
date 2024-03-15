@@ -13,23 +13,6 @@ class Booking:
         self.__payment = None 
         Booking.booking_number += 1
     
-    def update_payment(self):
-        pass
-
-    def add_passenger(self, passenger):
-        self.__passenger_list.append(passenger)
-
-    def add_payment(self, payment):
-        self.__payment = payment
-
-    def set_booking_status(self, status):
-        if status == "Pending":
-            self.__booking_status = status
-        elif status == "Cancel":
-            self.__booking_status = status
-        elif status == "Confirm":
-            self.__booking_status = status
-    
     def view_passenger_boarding_pass(self):
         boarding_pass_list = {}
         number = 1
@@ -46,6 +29,9 @@ class Booking:
             boarding_pass_list[f"Passenger {number}"]["seat"] = boarding_pass.seat.row + boarding_pass.seat.column
             number += 1
         return boarding_pass_list
+
+    def add_passenger(self, passenger):
+        self.__passenger_list.append(passenger)
 
     @property
     def payment(self):
@@ -78,3 +64,11 @@ class Booking:
     @property
     def destination_time(self):
         return self.__destination_time
+
+    def set_payment(self, transaction):
+        self.__payment = transaction
+
+    def set_booking_status(self, status):
+        self.__booking_status = status
+
+        
