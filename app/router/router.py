@@ -52,8 +52,8 @@ def search_flight(dto:dto_search_flight):
     except:
         return "could not matched a flight"
 
-@app.get("/select_flight", tags=["Filghts"])
-def select_flight(sort_by:str):
+@app.get("/sort_flight", tags=["Filghts"])
+def sort_flight(sort_by:str):
     try:
         sorted_flight = controller.sort_flight(flight_list, sort_by)
         if sorted_flight:
@@ -61,8 +61,8 @@ def select_flight(sort_by:str):
     except:
         return "could not find a flight"
 
-@app.get("/{flight_instance_no}/select_seat" , tags=["Booking"])
-def select_seat(flight_instance_no):
+@app.get("/{flight_instance_no}/show_seat_map" , tags=["Booking"])
+def show_seat_map(flight_instance_no):
     return controller.get_seat_data(flight_instance_no)
 
 @app.post("/{user_id}/{flight_instance_no}/create_booking", tags=["Booking"])
@@ -100,8 +100,8 @@ def fill_info_and_select_package(user_id, booking_no, flight_instance_no, dto:dt
     except:
         return "failed to fill infomation"
 
-@app.get("/{user_id}/{booking_no}/booking_details", tags=["Booking"])
-def booking_details(user_id, booking_no):
+@app.get("/{user_id}/{booking_no}/show_price_summary", tags=["Booking"])
+def show_price_summary(user_id, booking_no):
     try:
         booking_details = controller.booking_details(user_id, booking_no)
         if booking_details:
@@ -109,21 +109,19 @@ def booking_details(user_id, booking_no):
     except:
         return "could not reach booking details"
 
-@app.put("/{user_id}/payment_method/creditcard" , tags=["Payment"])
-def card_paid(user_id, booking_id, card_info:card_info):
+@app.put("/{user_id}/payment_method/pay_by_card" , tags=["Payment"])
+def pay_by_card(user_id, booking_id, card_info:card_info):
     Booking_details = controller.booking_details(user_id, booking_id)
     payment = controller.pay(user_id, booking_id, Booking_details, 0, card_info)
     if payment:
         return "card payment is successful"
 
-
-@app.put("/{user_id}/payment_method/mobilebanking", tags=["Payment"])
-def mobilebanking_paid(user_id, booking_id, bank_account_info:bank_account_info):
+@app.put("/{user_id}/payment_method/pay_by_mobilebanking", tags=["Payment"])
+def pay_by_mobilebanking(user_id, booking_id, bank_account_info:bank_account_info):
     Booking_details = controller.booking_details(user_id, booking_id)
     payment = controller.pay(user_id, booking_id, Booking_details, 1, bank_account_info)
     if payment:
         return "mobilebanking payment is successful"
-
 
 @app.post("/login", tags=["Sign in/Sign up"])
 def login(user_data: dto_login):
