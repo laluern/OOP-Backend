@@ -1,11 +1,11 @@
-class Promocode:
-    promocode_list = []
+class PromoCode:
+    promo_code_list = []
 
     def __init__(self, code, discount, expire_date):
         self.__code = code
         self.__discount = discount
         self.__expire_date = expire_date
-        Promocode.promocode_list.append(self)
+        PromoCode.promo_code_list.append(self)
      
     @property
     def code(self):

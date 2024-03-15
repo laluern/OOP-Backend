@@ -61,8 +61,8 @@ def sort_flight(sort_by:str):
     except:
         return "could not find a flight"
 
-@app.get("/{flight_instance_no}/show_seat_map" , tags=["Booking"])
-def show_seat_map(flight_instance_no):
+@app.get("/{flight_instance_no}/view_seat_map" , tags=["Booking"])
+def view_seat_map(flight_instance_no):
     return controller.get_seat_data(flight_instance_no)
 
 @app.post("/{user_id}/{flight_instance_no}/create_booking", tags=["Booking"])
@@ -116,8 +116,8 @@ def pay_by_card(user_id, booking_id, card_info:card_info):
     if payment:
         return "card payment is successful"
 
-@app.put("/{user_id}/payment_method/pay_by_mobilebanking", tags=["Payment"])
-def pay_by_mobilebanking(user_id, booking_id, bank_account_info:bank_account_info):
+@app.put("/{user_id}/payment_method/pay_by_mobile_banking", tags=["Payment"])
+def pay_by_mobile_banking(user_id, booking_id, bank_account_info:bank_account_info):
     Booking_details = controller.booking_details(user_id, booking_id)
     payment = controller.pay(user_id, booking_id, Booking_details, 1, bank_account_info)
     if payment:

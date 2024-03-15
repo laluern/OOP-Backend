@@ -2,7 +2,7 @@ from datetime import datetime
 from copy import deepcopy
 
 from .user import User
-from .promocode import Promocode
+from .promocode import PromoCode
 from .booking import Booking
 from .passenger import Passenger
 from .boardingpass import BoardingPass
@@ -42,8 +42,8 @@ class Controller:
             if flight_instance.departure == departure_name and flight_instance.destination == destination_name and str(flight_instance.departure_time.date()) == departure_time:
                 available_seat = self.get_available_seat(flight_instance.flight_instance_no)
                 if len(available_seat) >= total_passenger:
-                    lowest__price_seat = min(available_seat, key=lambda seat_no: flight_instance.search_show_seat_by_seat_no(seat_no).price)
-                    lowest_price = flight_instance.search_show_seat_by_seat_no(lowest__price_seat).price
+                    lowest_price_seat = min(available_seat, key=lambda seat_no: flight_instance.search_show_seat_by_seat_no(seat_no).price)
+                    lowest_price = flight_instance.search_show_seat_by_seat_no(lowest_price_seat).price
                     
                     flight_departure_time = flight_instance.departure_time
                     flight_destination_time = flight_instance.destination_time
@@ -52,15 +52,15 @@ class Controller:
 
                     if promocode != "":
                         if self.check_expire_date(promocode) == True:
-                            for cur_promocode in Promocode.promocode_list:
+                            for cur_promocode in PromoCode.promo_code_list:
                                 if cur_promocode.code == promocode:
                                     discount_price =  lowest_price - (lowest_price * (cur_promocode.discount/100))
                                     break
                             flight_list[flight_instance.flight_instance_no] = [departure.airport_code, flight_departure_time, destination.airport_code, flight_destination_time, int(duration.total_seconds()), float(lowest_price), float(discount_price)]
                         elif self.check_expire_date(promocode) == False:
-                            return "Promocode is expired"
+                            return "PromoCode is expired"
                         else: 
-                            return "Promocode is invalid"
+                            return "PromoCode is invalid"
 
                     else:
                         flight_list[flight_instance.flight_instance_no] = [departure.airport_code, flight_departure_time, destination.airport_code, flight_destination_time, int(duration.total_seconds()), float(lowest_price), float(discount_price)]
@@ -97,22 +97,21 @@ class Controller:
         return booking.booking_no
 
     def fill_info(self, user_id, flight_instance_no, booking_no, seat_no, weight, gender, phone_number, full_name, birth_date, citizen_id):
-        flight_instance = self.search_flight_instance_by_flight_instance_no(flight_instance_no)
-        airplane = self.search_airplane_by_airplane_id(flight_instance.airplane)
-        temporary_seat = flight_instance.search_show_seat_by_seat_no(seat_no)
-        user = self.search_user_by_user_id(user_id)
-        booking = user.search_booking_by_number(booking_no)
-        if booking:
-            if booking.booking_status == "Pending":
-                passenger = Passenger(gender, phone_number, full_name, birth_date, citizen_id)
-                boardingpass = BoardingPass(flight_instance.destination, flight_instance.departure, flight_instance.departure_time, flight_instance.destination_time, flight_instance.flight_no)
-        
-                boardingpass.add_luggage(Luggage(weight))
-                
-                boardingpass.add_seat(temporary_seat)
-                passenger.add_boardingpass(boardingpass)
-                booking.add_passenger(passenger)
-                return "Done"
+            flight_instance = self.search_flight_instance_by_flight_instance_no(flight_instance_no)
+            airplane = self.search_airplane_by_airplane_id(flight_instance.airplane)
+            temporary_seat = flight_instance.search_show_seat_by_seat_no(seat_no)
+            user = self.search_user_by_user_id(user_id)
+            booking = user.search_booking_by_number(booking_no)
+            if booking:
+                if booking.booking_status == "Pending":
+                    passenger = Passenger(gender, phone_number, full_name, birth_date, citizen_id)
+                    boardingpass = BoardingPass(flight_instance.destination, flight_instance.departure, flight_instance.departure_time, flight_instance.destination_time, flight_instance.flight_no)
+            
+                    boardingpass.set_luggage(Luggage(weight))
+                    boardingpass.set_seat(temporary_seat)
+                    passenger.set_boarding_pass(boardingpass)
+                    booking.add_passenger(passenger)
+                    return "Done"
 
     def cancel_booking(self, user_id, booking_no):
         user = self.search_user_by_user_id(user_id)
@@ -182,7 +181,7 @@ class Controller:
                 seat = passenger.boarding_pass.seat
                 seat.reserve_seat()
     
-            booking.add_payment(transaction)
+            booking.set_payment(transaction)
             booking.set_booking_status("Confirm")
             return "Done"
         else:
@@ -201,14 +200,13 @@ class Controller:
         return new_user
 
     def check_expire_date(self, promocode):
-        for cur_promocode in Promocode.promocode_list:
+        for cur_promocode in PromoCode.promo_code_list:
             if cur_promocode.code == promocode:
                 if cur_promocode.expire_date > datetime.now():
                     return True
                 else: 
                     return False
         return "Not Found"
-
 
     def hash_password(self, password):
         return hash(password)   
@@ -253,7 +251,7 @@ class Controller:
     def set_seat_price(self, flight_instance_no, base_price):
         flight_instance = self.search_flight_instance_by_flight_instance_no(flight_instance_no)
         airplane = self.search_airplane_by_airplane_id(flight_instance.airplane)
-        flight_instance.set_seat_price(airplane, base_price)
+        flight_instance.apply_seat_price(airplane, base_price)
 
     def search_user_by_user_id(self, user_id):
         for user in self.__user_list:
@@ -326,7 +324,7 @@ class Controller:
         self.__airport_list.append(airport)
 
     def add_promocode(self, code):
-        Promocode.promocode_list.append(code)
+        PromoCode.promocode_list.append(code)
     
     @property
     def flight_instance_list(self):

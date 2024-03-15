@@ -7,6 +7,7 @@ class Flight:
     @property
     def departure(self):
         return self.__departure
+        
     @property
     def destination(self):
         return self.__destination

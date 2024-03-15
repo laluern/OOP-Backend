@@ -33,12 +33,6 @@ class Booking:
     def add_passenger(self, passenger):
         self.__passenger_list.append(passenger)
 
-    def add_payment(self, payment):
-        self.__payment = payment
-
-    def set_booking_status(self, status):
-        self.__booking_status = status
-
     @property
     def payment(self):
         return self.__payment
@@ -70,3 +64,11 @@ class Booking:
     @property
     def destination_time(self):
         return self.__destination_time
+
+    def set_payment(self, transaction):
+        self.__payment = transaction
+
+    def set_booking_status(self, status):
+        self.__booking_status = status
+
+        

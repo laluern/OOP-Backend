@@ -4,7 +4,7 @@ from ..internal.controller import Controller
 from ..internal.flight import Flight
 from ..internal.airport import Airport
 from ..internal.airplane import Airplane
-from ..internal.promocode import Promocode
+from ..internal.promocode import PromoCode
 from ..internal.creditcard import CreditCard
 from ..internal.mobilebanking import MobileBanking
 from ..internal.user import User
@@ -30,12 +30,12 @@ controller.add_airplane(Airplane(60)) #A00010
 controller.add_airplane(Airplane(60)) #A00011
 controller.add_airplane(Airplane(60)) #A00012
 
-Promocode('A1000', 10, datetime(2020, 1, 1))
-Promocode('A2000', 10, datetime(2029, 1, 1))
-Promocode('A3000', 10, datetime(2029, 1, 1))
-Promocode('B1000', 20, datetime(2029, 1, 1))
-Promocode('B2000', 20, datetime(2029, 1, 1))
-Promocode('C3000', 30, datetime(2029, 1, 1))
+PromoCode('A1000', 10, datetime(2020, 1, 1))
+PromoCode('A2000', 10, datetime(2029, 1, 1))
+PromoCode('A3000', 10, datetime(2029, 1, 1))
+PromoCode('B1000', 20, datetime(2029, 1, 1))
+PromoCode('B2000', 20, datetime(2029, 1, 1))
+PromoCode('C3000', 30, datetime(2029, 1, 1))
 
 controller.add_flight_list(Flight("Suvarnabhumi", "Chiang Mai", "F00001"))
 controller.add_flight_list(Flight("Chiang Mai", "Suvarnabhumi", "F00002"))
@@ -90,10 +90,10 @@ controller.fill_info("U00001", "FI00001", "B00001", "4A", "30kg", "male", "08128
 controller.fill_info("U00001", "FI00001", "B00001", "4B", "30kg", "male", "0812895077", "Peerawat aaa", "2004-08-12", "123456")
 controller.booking_details("U00001", "B00001")
 
-controller.create_booking("U00003", "FI00001")
-controller.fill_info("U00001", "FI00001", "B00001", "4A", "30kg", "male", "0812895077", "Supakarn Tantichawa-ochanon", "2004-08-12", "123456")
-controller.fill_info("U00001", "FI00001", "B00001", "4B", "30kg", "male", "0812895077", "Peerawat aaa", "2004-08-12", "123456")
-controller.booking_details("U00001", "B00001")
+# controller.create_booking("U00003", "FI00001")
+# controller.fill_info("U00001", "FI00001", "B00001", "4A", "30kg", "male", "0812895077", "Supakarn Tantichawa-ochanon", "2004-08-12", "123456")
+# controller.fill_info("U00001", "FI00001", "B00001", "4B", "30kg", "male", "0812895077", "Peerawat aaa", "2004-08-12", "123456")
+# controller.booking_details("U00001", "B00001")
 
 # info = {
 #     "card_holder_name": "Supakarn",
