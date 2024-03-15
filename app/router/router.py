@@ -80,7 +80,7 @@ def cancel_booking(user_id, booking_no:str):
         controller.cancel_booking(user_id, booking_no)
         return "Cancel booking succesfully"
     except:
-        return "failed to create booking"
+        return "failed to cancel booking"
     
 @app.get("/{user_id}/{booking_no}/view_boarding_pass" , tags=["Users"])
 def view_boarding_pass(user_id, booking_no):
